@@ -1,0 +1,230 @@
+package day1127;
+
+/**
+ * 
+ * @author owner
+ */
+public class SsnProcessing {
+	String ssn;
+
+	// 1-1
+	public SsnProcessing(String ssn) {
+		this.ssn = ssn;
+	}
+
+	// 1-2
+	public boolean ssnLength() {
+		boolean ck = false;
+
+		if (ssn.length() == 14)
+			ck = true;
+
+		return ck;
+	}
+
+	// 1-3
+	public boolean ssnHyphen() {
+		boolean ck = false;
+
+		if (ssn.contains("-"))
+			ck = true;
+
+		return ck;
+	}
+
+	// 1-4
+	public boolean ssnValid() {
+		boolean ck = false;
+		String tempSsn = ssn;
+		int ssnNum = 0;
+		int[] ssnArr = new int[13];
+
+		tempSsn = ssn.replaceAll("-", "");
+
+		// ¹è¿­¿¡ ssnÀ» °¢ ÀÚ¸®¿¡ ´ëÀÔ
+		for (int i = 0; i < 13; i++) {
+			ssnArr[i] = Integer.valueOf(tempSsn.charAt(i) - '0');
+		}
+
+		// °¢ ÀÚ¸®ÀÇ ssn¿¡ ÇØ´ç ¼ýÀÚ °öÇÑµÚ ´õÇÔ
+		for (int i = 0; i < 12; i++) {
+			if (i < 8)
+				ssnArr[i] = ssnArr[i] * (i + 2);
+			else
+				ssnArr[i] = ssnArr[i] * (i - 6);
+
+			ssnNum += ssnArr[i];// °¢ ÀÚ¸®¿¡ °öÇÑ°ªÀ» ´õÇÔ
+		}
+		ssnNum = (11 - (ssnNum % 11)) % 10;
+
+		return (ssnNum == ssnArr[12]);
+	}
+
+	// 1-5
+	public String returnBirth() {
+		String birth;
+		birth = ssn.substring(0, 2);
+
+		switch (ssn.charAt(7)) {
+		case '0':
+		case '9':
+			birth = "18" + birth;
+			break;
+		case '1':
+		case '2':
+		case '5':
+		case '6':
+			birth = "19" + birth;
+			break;
+		case '3':
+		case '4':
+		case '7':
+		case '8':
+			birth = "20" + birth;
+			break;
+		}
+		birth = birth + "-" + ssn.substring(2, 4) + "-" + ssn.substring(4, 6);
+
+		return birth;
+	}
+
+	// 1-6
+	public int returnAge() {
+		int age = 0;
+		String year;
+		year = returnBirth().substring(0, 4);
+		age = 2018 - Integer.valueOf(year) + 1;
+
+		return age;
+	}
+
+	// 1-7
+	public char returnGender() {
+		char gender = 'ŸÓ';
+
+		switch (ssn.charAt(7)) {
+		case '1':
+		case '3':
+		case '5':
+		case '7':
+		case '9':
+			gender = '³²';
+			break;
+		default:
+			gender = '¿©';
+			break;
+		}
+
+		return gender;
+	}
+
+	// 1-8
+	public String returnForeigner() {
+		String foreigner = "¹«¼Ò¼Ó";
+
+		switch (ssn.charAt(7)) {
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '9':
+			foreigner = "³»±¹ÀÎ";
+			break;
+		default:
+			foreigner = "¿Ü±¹ÀÎ";
+			break;
+		}
+
+		return foreigner;
+	}
+	
+	// 1-9
+		public String returnZodiac() {
+			String zodiac = "°í¾çÀÌ¶ì";
+			String year;
+			int ck=0;
+			
+			year = returnBirth().substring(0, 4);
+			ck = Integer.valueOf(year)%12;
+
+			//4ÀÚ 5Ãà 6ÀÎ 7¹¦
+			//8Áø 9»ç 10¿À 11¹Ì 
+			//0 ½Å 1À¯ 2¼ú 3 ÇØ 
+			switch (ck) {
+			case 0:
+				zodiac = "¿ø¼þÀÌ¶ì";
+				break;
+			case 1:
+				zodiac = "´ß¶ì";
+				break;
+			case 2:
+				zodiac = "°³¶ì";
+				break;
+			case 3:
+				zodiac = "µÅÁö¶ì";
+				break;
+			case 4:
+				zodiac = "Áã¶ì";
+				break;
+			case 5:
+				zodiac = "¼Ò¶ì";
+				break;
+			case 6:
+				zodiac = "È£¶ûÀÌ¶ì";
+				break;
+			case 7:
+				zodiac = "Åä³¢¶ì";
+				break;
+			case 8:
+				zodiac = "¿ë¶ì";
+				break;
+			case 9:
+				zodiac = "¹ì¶ì";
+				break;
+			case 10:
+				zodiac = "¸»¶ì";
+				break;
+			case 11:
+				zodiac = "¾ç¶ì";
+				break;
+			default:
+				zodiac = "±â¸ð¶ì";
+				break;
+			}
+
+			return zodiac;
+		}
+
+	public static void main(String[] args) {
+		SsnProcessing sp = new SsnProcessing("121212-1234567");// 1-1
+
+		//1-2
+		if(sp.ssnLength()) {
+			//1-3
+			if(sp.ssnHyphen()) {
+				//1-4
+				if(sp.ssnValid()) {
+					System.out.println("»ý³â¿ùÀÏ = "+sp.returnBirth());// 1-5
+					System.out.println("³ªÀÌ = "+sp.returnAge());// 1-6
+					System.out.println("¼ºº° = "+sp.returnGender());// 1-7
+					System.out.println("¿ø»êÁö = "+sp.returnForeigner());// 1-8
+					System.out.println("¹«½¼¶ì? = "+sp.returnZodiac());//1-9
+
+				}else {
+					System.out.println("ÁÖ¹Î¹øÈ£°¡ À¯È¿ÇÏÁö ¾Ê½À´Ï´Ù.");
+				}
+			}else {
+				System.out.println("ÁÖ¹Î¹øÈ£¿¡ ÇÏÀÌÇÂÀÌ ¾ø½À´Ï´Ù.");
+			}
+			
+		}else {
+			System.out.println("ÁÖ¹Î¹øÈ£ÀÇ ±æÀÌ°¡ 14ÀÚ¸®°¡ ¾Æ´Õ´Ï´Ù.");
+		}
+		
+
+		
+
+	}
+
+}
