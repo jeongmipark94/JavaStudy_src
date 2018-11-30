@@ -13,6 +13,7 @@ public class HongGilDong extends Person {
 	 * 홍길동은 싸움을 평민보다 잘하므로 7로 시작
 	 */
 	public HongGilDong() { // 생성자
+		super();
 		level=7;
 	}//HongGilDong
 	
@@ -44,5 +45,20 @@ public class HongGilDong extends Person {
 		return result;
 	}//fight
 	
+	@Override
+	public String toString() { //toString 을 tostring으로 쓰면 인식이안됨
+		return "홍길동 객체의 값  눈: "+getEye()+"코:"+ getEye()+"/" 
+				+",입 : "+ getMouth();
+	}//toString
+	/**
+	 * 부모클래스가 제공하는 method의 기능이 자식에서 맞지 않아<br>
+	 * 장소인 식당이 주막으로 변경<br>
+	 * 화폐단위인 원이 냥으로 변경
+	 * 
+	 */
+	@Override
+	public String eat(String menu, int price) {
+		return getName()+"이 주막에서 "+ menu+ "인 음식을" + price +"냥 내고 사먹는다.";
+	}
 	
 }//class
