@@ -2,7 +2,7 @@ package day1203;
 
 /**
  *	default method :  인터페이스에서 업무(자바코드)를 기술할 수 있는 method <br>
- *dafault method를 호출하려면 구현 클레스로 is a 관계의 객체화를 
+ *default method를 호출하려면 구현 클레스로 is a 관계의 객체화를 
  *해야만 한다.
  * @author owner
  */

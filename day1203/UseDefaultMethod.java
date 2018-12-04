@@ -9,12 +9,12 @@ public class UseDefaultMethod implements UseDefault {
 
 	public static void main(String[] args) {
 			//자식클래스로 객체화 
-			UseDefaultMethod udm = new UseDefaultMethod();
-			udm.test();
-			udm.temp(); //default method
+//			UseDefaultMethod udm = new UseDefaultMethod();
+//			udm.test();
+//			udm.temp(); //default method
 			
 			//is a 관계의 객체화
-			UseDefaultMethod ud=new UseDefaultMethod();
+			UseDefault ud=new UseDefaultMethod();
 			ud.test(); //Override한 method가 호출
 			ud.temp();//default method
 			
