@@ -41,6 +41,19 @@ public class HwCustom extends Frame {
 		list2.add("기울임꼴");
 		list2.add("굵게 기울임꼴");
 		
+		//for에 if써서 하는 방법
+//		List list3 = new List();
+//		for(int i=0 ; i<=88;) {
+//			if(i <=8) {
+//				i+=2;
+//				list3.add(Integer.toString(i));
+//			}else {
+//				i++;
+//				list3.add(Integer.toString(i));
+//				
+//			}
+//		}
+		
 		List list3 = new List();
 		for(int i =2; i<=10; i+=2) {
 			list3.add(Integer.toString(i));
