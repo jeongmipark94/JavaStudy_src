@@ -123,7 +123,6 @@ public class JavaMemoEvt extends WindowAdapter implements ActionListener {
 	 */
 	public void helpDialog() {
 		new MemoHelp(jm);
-		
 	}//helpDialog
 	
 }//class
