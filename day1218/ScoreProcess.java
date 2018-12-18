@@ -9,6 +9,8 @@ import javax.swing.JTextArea;
 
 import static java.lang.Integer.parseInt;
 
+import java.text.DecimalFormat;
+
 public class ScoreProcess {
 	private List<ScoreVO> listStu;
 	private int totalScore;
@@ -117,10 +119,14 @@ public class ScoreProcess {
 			totalScore +=tempTotal;
 			
 			tempTotal=0;//한학생의 총점변수를 초기화
-			
+				
 		}//end for
+//		데시말 포맷으로 소숫점 둘 째 자리까지 표현하기
+//		DecimalFormat df = new DecimalFormat("0.00");
+//		String avg = df.format(totalScore/(double)(listStu.size()*2));
 		viewData.append("--------------------------------------------------------------------\n")
 		.append("\t\t\t\t총점").append(totalScore).append("\t평균")
+//		.append(avg);
 		.append(String.format("%5.2f", totalScore/ (double)(listStu.size()*2)));
 		
 		JTextArea jta= new JTextArea(7,50);
