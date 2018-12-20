@@ -5,6 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
 
 import kr.co.sist.memo.view.JavaMemo;
 import kr.co.sist.memo.view.MemoFormat;
@@ -33,7 +40,17 @@ public class JavaMemoEvt extends WindowAdapter implements ActionListener {
 		
 		//열기 메뉴아이템에서 이벤트가 발생했을 떄
 		if( ae.getSource()== jm.getMiOpen() )  {
-			openMemo();
+			try {
+				openMemo();
+			} catch (FileNotFoundException e) {
+				JOptionPane.showMessageDialog(jm, "선택한 파일을 읽을 수 없습니다.",
+						"파일열기 에러", JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(jm, "선택한 파일을 읽어들이는 중 문제가 발생",
+						"파일열기 에러", JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
 		}//end if
 		//저장 메뉴아이템에서 이벤트가 발생했을 때
 		if( ae.getSource()== jm.getMiSave() )  {
@@ -73,7 +90,7 @@ public class JavaMemoEvt extends WindowAdapter implements ActionListener {
 	/**
 	 * txt파일 열기 
 	 */
-	public void openMemo() {
+	public void openMemo() throws FileNotFoundException, IOException {
 		FileDialog fdOpen = new FileDialog(jm, "문서열기", FileDialog.LOAD);
 		fdOpen.setVisible(true);
 		
@@ -81,6 +98,31 @@ public class JavaMemoEvt extends WindowAdapter implements ActionListener {
 		String fileName = fdOpen.getFile();
 		
 		if(filePath != null) {//선택한 파일이 존재
+			//////////////////////////12-20-2018 스트림으로 파일의 내용을 읽는 코드 추가 시작///////////////////
+			//선택한 파일로 파일객체 생성
+			File file = new File(filePath + fileName);
+			//16bit stream사용
+			BufferedReader br = null;
+			StringBuilder tempData = new StringBuilder();
+			
+			try {
+				br = new BufferedReader(new FileReader(file));
+				String temp ="";
+				//T.A를 초기화한후
+				while((temp =br.readLine())!= null) {
+					//파일에서 읽어들인 내용을 설정한다.
+				}//end while
+				
+			}finally {
+				if( br != null) { br.close();  }//end if
+			}//end finally
+			
+			
+			
+			
+			// 내용 : 아아아아아
+			// 작성 : 나
+			//////////////////////////12-20-2018 스트림으로 파일의 내용을 읽는코드 추가 끝///////////////////
 			//파일의 경로와 이름을 Frame의 TitleBar에 설정
 			jm.setTitle("메모장 - 열기 "+filePath+fileName);
 		}//end if
