@@ -83,7 +83,7 @@ public class UseTitledBorder extends JFrame implements ActionListener {
 			
 			//비교하여 같다면 자바메모장 클래스를 실행
 			if(id.equals("admin")&& pass.equals("123")) {
-				new JavaMemo();
+//				new JavaMemo();
 				dispose();
 			}else {
 				jlOutput.setText("아이디나 비밀번호를 확인해 주세요");

@@ -22,7 +22,7 @@ public class UseFileReader {
 //			br = new BufferedReader(fr);
 			
 			br = new BufferedReader(new FileReader(file));
-			
+						
 			
 			String temp="";
 			//한줄씩 읽어들여 읽어들인 내용이 존재한다면
