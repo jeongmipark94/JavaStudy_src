@@ -59,11 +59,11 @@ public class MemoFormat extends Dialog {
 		listFont.add("Monospaced");
 		listFont.add("DialogInput");
 		
-		
-		listStyle.add("일반");
-		listStyle.add("굵게");
-		listStyle.add("기울임꼴");
-		listStyle.add("굵게 기울임꿀");
+//		이거있으면 중복되서 나옴 그래서 없애야함 
+//		listStyle.add("일반");
+//		listStyle.add("굵게");
+//		listStyle.add("기울임꼴");
+//		listStyle.add("굵게 기울임꿀");
 		
 		for(String style : arrStyle) {
 			listStyle.add(style);
