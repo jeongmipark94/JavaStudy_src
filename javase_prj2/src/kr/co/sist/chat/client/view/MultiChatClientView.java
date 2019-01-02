@@ -9,6 +9,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import kr.co.sist.chat.client.evt.MultiChatClientEvt;
+
 @SuppressWarnings("serial")
 public class MultiChatClientView extends JFrame {
 
@@ -48,9 +50,18 @@ public class MultiChatClientView extends JFrame {
 		 add("Center",jspTalkDisplay);
 		 add("South", jtfTalk);
 		 
-		 setBounds(100, 100, 600, 300);
+		 MultiChatClientEvt mcce = new MultiChatClientEvt(this);
+		 addWindowListener(mcce);
+		 
+		 jbtConnect.addActionListener(mcce);
+		 jbtClose.addActionListener(mcce);
+		 jbtCapture.addActionListener(mcce);
+		 jtfTalk.addActionListener(mcce);
+		 
+		 
+		 setBounds(100, 100, 600, 350);
 		 setVisible(true);
-		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 
 		 
 	}//MultiChatClientView
