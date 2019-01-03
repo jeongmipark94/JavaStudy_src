@@ -63,7 +63,6 @@ public class FourChatServerView extends JFrame {
 		FourChatServerEvt fcse = new FourChatServerEvt( this);
 		jbStart.addActionListener(fcse);
 		jbClose.addActionListener(fcse);
-		addWindowListener(fcse);
 		
 		
 		
