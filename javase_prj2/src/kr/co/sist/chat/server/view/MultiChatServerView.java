@@ -20,6 +20,7 @@ public class MultiChatServerView extends JFrame {
 	private JScrollPane jspList;
 	private JButton jbtOpenServer, jbtCloseServer;
 	private DefaultListModel<String> dlmChatList;
+	
 	public MultiChatServerView() {
 		super("::::::::::::::::::::::::::::::::채팅방 관리자 :::::::::::::::");
 		dlmChatList = new DefaultListModel<String>();
