@@ -29,6 +29,11 @@ public class CpEmp2OneVO {
 	public Date getHiredate() {
 		return hiredate;
 	}
+
+	@Override
+	public String toString() {
+		return "CpEmp2OneVO [sal=" + sal + ", ename=" + ename + ", hiredate=" + hiredate + "]";
+	}
 	
 	
 	
