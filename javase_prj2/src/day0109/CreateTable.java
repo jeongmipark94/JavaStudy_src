@@ -1,13 +1,10 @@
 package day0109;
 
-import java.beans.PropertyEditorSupport;
 import java.sql.Connection;
-import java.sql.DriverPropertyInfo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.naming.spi.DirStateFactory.Result;
 import javax.swing.JOptionPane;
 
 import kr.co.sist.connection.GetConnection;

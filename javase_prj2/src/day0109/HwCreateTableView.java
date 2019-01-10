@@ -1,6 +1,8 @@
 package day0109;
 
 
+import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -14,7 +16,7 @@ public class HwCreateTableView extends JFrame  {
 	private JComboBox<String> jcbConst, jcbType;
 	private JButton jbtAddTab, jbtAddData, jbtCreate, jbtInit;
 	private JTextArea result;
-	public HwCreateTableView() {
+	public HwCreateTableView() throws SQLException {
 		
 		JLabel jltabName= new JLabel("테이블명");
 		JLabel jlcolName = new JLabel("컬럼명");
@@ -157,7 +159,11 @@ public class HwCreateTableView extends JFrame  {
 
 
 	public static void main(String[] args) {
-		new HwCreateTableView();
+		try {
+			new HwCreateTableView();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}//main
 
 }//class
