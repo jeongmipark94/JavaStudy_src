@@ -93,7 +93,7 @@ public class HwCteateTableEvt extends WindowAdapter implements ActionListener {
 		// 여기서 비교
 		for (int i = 0; i < colNamelist.size(); i++) {
 			if (colName.equals(colNamelist.get(i) )){
-
+				
 				JOptionPane.showMessageDialog(hctv, "중복된 컬럼명입니다.");
 				return;
 			}
