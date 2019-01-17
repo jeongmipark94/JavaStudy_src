@@ -1,5 +1,8 @@
 package kr.co.sist.lunch.admin.controller;
 
+import java.awt.GridLayout;
+import java.awt.Menu;
+import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -9,10 +12,16 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,21 +29,28 @@ import kr.co.sist.lunch.admin.model.LunchAdminDAO;
 import kr.co.sist.lunch.admin.view.LunchAddView;
 import kr.co.sist.lunch.admin.view.LunchDetailView;
 import kr.co.sist.lunch.admin.view.LunchMainView;
+import kr.co.sist.lunch.admin.vo.CalcVO;
 import kr.co.sist.lunch.admin.vo.LunchDetailVO;
 import kr.co.sist.lunch.admin.vo.LunchVO;
+import kr.co.sist.lunch.admin.vo.OrderVO;
 
 public class LunchMainController extends WindowAdapter implements ActionListener, MouseListener {
 
 	private LunchMainView lmv;
 	private LunchAdminDAO la_dao;
 
-	public static final int DBL_CLICK=2;
+	public static final int DBL_CLICK = 2;
 	
+	private String orderNum;
+	private String lunchName;
+	private int selectedRow;
+
 	public LunchMainController(LunchMainView lmv) {
 		this.lmv = lmv;
 		la_dao = LunchAdminDAO.getInstance();
 		// 도시락 목록을 설정한다.
 		setLunch();
+		orderNum="";
 	}// LunchMainController
 
 	/**
@@ -81,41 +97,179 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 		lmv.dispose();
 	}// windowClosing
 
+	
+	@Override
+	public void windowClosed(WindowEvent e) {
+		System.exit(0); //JVM의 모든 인스턴스 종료
+	}//windowClosed
+
+	private void searchOrder() {
+		try {
+			List<OrderVO> list = la_dao.selectOrderList();
+			DefaultTableModel dtm = lmv.getDtmOrder();
+			dtm.setRowCount(0);// 초기화
+
+			Vector<Object> vec = null;
+			OrderVO ovo = null;
+			for (int i = 0; i < list.size(); i++) {
+				ovo = list.get(i);
+				vec = new Vector<Object>();
+
+				vec.add(new Integer(i + 1));
+				vec.add(ovo.getOrderNum());
+				vec.add(ovo.getLunchCode());
+				vec.add(ovo.getLunchName());
+				vec.add(ovo.getOrderName());
+				vec.add(ovo.getQuan());
+				vec.add(ovo.getPrice());
+				vec.add(ovo.getOrderDate());
+				vec.add(ovo.getPhone());
+				vec.add(ovo.getIpAddress());
+				vec.add(ovo.getStatus());
+				// 추가
+				dtm.addRow(vec);
+
+			} // end for
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}// searchOrder
+
 	@Override
 	public void mouseClicked(MouseEvent me) {
-			switch( me.getClickCount()) {
-			case DBL_CLICK:
-					if( me.getSource() == lmv.getJtLunch()){ //도시락 테이블에서 더블 클릭이 되면
-						//도시락 코드로 DB Table을 검색 하여 상세정보를 전달한다.
-						JTable jt = lmv.getJtLunch();
-						try {
-							LunchDetailVO ldvo=
-									la_dao.selectDetailLunch((String)jt.getValueAt(jt.getSelectedRow(), 1));
-							new LunchDetailView( lmv, ldvo, this );
-						} catch (SQLException se) {
-							JOptionPane.showMessageDialog(lmv, "DB에서 문제가 발생했습니다.");
-							se.printStackTrace();
-						}
-					}//end if
-					if( me.getSource() == lmv.getJtOrder()){ //주문테이블에서 더블 클릭
-						
-					}//end if
-				
-			}//end 
-		
+
+		if (me.getSource() == lmv.getJtb()) {
+			if (lmv.getJtb().getSelectedIndex() == 1) { // 처음 탭에서 이벤트 발생
+				// 현재까지의 주문사항을 조회
+				searchOrder();
+			} // end if
+		} // end if
+
+		if (me.getSource() == lmv.getJtOrder() && 
+					me.getButton() == MouseEvent.BUTTON3) {
+		//마우스 포인터가 클릭되면 테이블에서 클릭한 행을 가져오는 일
+		JTable jt = lmv.getJtOrder();
+		     int r = jt.rowAtPoint(me.getPoint());
+		        if (r >= 0 && r < jt.getRowCount()) {
+		        	jt.setRowSelectionInterval(r, r);//시작행과 끝행 사이의 행을 선택하는 일
+		        } else {//else때문에  필요 
+		        	jt.clearSelection();
+		        }//선택된 행을 넣는다.
+		        selectedRow=r;
+			
+//			int row = jt.getSelectedRow();
+//			
+//			if(row==-1) {
+//				JOptionPane.showMessageDialog(lmv, "작업할 행을 먼저 선택해주세요.");
+//				return;
+//			}//end if
+			JPopupMenu jp = lmv.getJpOrderMenu();
+			jp.setLocation(me.getXOnScreen(), me.getYOnScreen());
+			jp.setVisible(true);
+			orderNum =(String)jt.getValueAt(jt.getSelectedRow(), 1);
+			lunchName = (String)jt.getValueAt(jt.getSelectedRow(), 3) + " " +
+								(String)jt.getValueAt(jt.getSelectedRow(), 4);
+		} else {
+			JPopupMenu jp = lmv.getJpOrderMenu();
+			jp.setVisible(false);
+	
+		} // end if
+
+		switch (me.getClickCount()) {
+		case DBL_CLICK:
+			if (me.getSource() == lmv.getJtLunch()) { // 도시락 테이블에서 더블 클릭이 되면
+				// 도시락 코드로 DB Table을 검색 하여 상세정보를 전달한다.
+				JTable jt = lmv.getJtLunch();
+				try {
+					LunchDetailVO ldvo = la_dao.selectDetailLunch((String) jt.getValueAt(jt.getSelectedRow(), 1));
+					new LunchDetailView(lmv, ldvo, this);
+				} catch (SQLException se) {
+					JOptionPane.showMessageDialog(lmv, "DB에서 문제가 발생했습니다.");
+					se.printStackTrace();
+				}
+			} // end if
+
+		}// end
+
 	}// mouseClicked
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		
-		if (ae.getSource() == lmv.getJbtAddLunch()) {//도시락 추가 버튼
-			new LunchAddView(lmv,this);
-		}//end if
-		
-		if (ae.getSource() == lmv.getJcbMonth()) {
+
+		if (ae.getSource() == lmv.getJbtAddLunch()) {// 도시락 추가 버튼
+			new LunchAddView(lmv, this);
+		} // end if
+
+		if (ae.getSource() == lmv.getJcbMonth()) {// 월별 마지막 일자 변경
 			setDay();
 		} // end if
+
+		if (ae.getSource() == lmv.getJbtCalcOrder()) {// 정산 버튼 클릭
+			searchCalc();
+		} // end if
+
+		if(ae.getSource()==lmv.getJmOrderRemove()) {
+//			JOptionPane.showConfirmDialog(lmv, "정말 삭제인 부분");
+		}//end if
+		if(ae.getSource()==lmv.getJmOrderStatus()) {
+			switch(JOptionPane.showConfirmDialog(lmv, "["+orderNum + lunchName 
+					+"]주문이 완료되었습니까?")) {
+			case JOptionPane.OK_OPTION:
+				JTable jt = lmv.getJtOrder();
+				jt.setValueAt("Y", selectedRow, 10); //테이블의 값만 변경
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////01-17-2019 : 주문 변경은 내일 .... 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				
+			}//end switch
+			
+		}//end if
+		
+		
 	}// actionPerformed
+
+	/**
+	 * 년, 월, 일 정보를 가져와서 정산
+	 */
+	private void searchCalc() {
+		int selYear = ((Integer) lmv.getJcbYear().getSelectedItem()).intValue();
+		int selMonth = ((Integer) lmv.getJcbMonth().getSelectedItem()).intValue();
+		int selDay = ((Integer) lmv.getJcbDay().getSelectedItem()).intValue();
+		StringBuilder searchDate = new StringBuilder();
+		searchDate.append(selYear).append("-").append(selMonth).append("-").append(selDay);
+
+		try {
+
+			// 선택한 일자의 조회결과를 받아서 JTable에 출력
+			List<CalcVO> list = la_dao.selectCalc(searchDate.toString());
+			CalcVO cv = null;
+//			JTable에 데이터를 추가하는 코드 작성해보세요              
+			// 데이터가 없는 날에는 "판매된 도시락이 없습니다" 를 출력
+
+			DefaultTableModel dtm = lmv.getDtmCalc();
+			dtm.setRowCount(0);
+
+			Object[] rowData = null;
+			for (int i = 0; i < list.size(); i++) {
+				cv = list.get(i);
+				rowData = new Object[4];// 컬럼의 값
+				rowData[0] = i + 1;
+				rowData[1] = cv.getLunchName() + "(" + cv.getLunchCode() + ")";
+				rowData[2] = cv.getTotal();
+				rowData[3] = cv.getPrice();
+				lmv.getDtmCalc().addRow(rowData);
+			} // end for
+
+			// 데이터가 없는 날에는 " 판매된 도시락이 없습니다" 출력
+			if (list.isEmpty()) {
+				JOptionPane.showMessageDialog(lmv, searchDate.toString() + "일 에는 판매된 도시락이 없습니다.");
+			} // end if
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} // end catch
+	}// searchCalc
 
 	/**
 	 * 월이 선택되면 해당 연의 해당 월의 마지막날을 설정.
@@ -136,7 +290,7 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 		for (int day = 1; day < lastDay + 1; day++) {
 			lmv.getCbmDay().addElement(day);// 마지막 날을 설정한다.
 		} // end for
-		lmv.getCbmDay().setSelectedItem(new Integer(nowDay));// 오늘을 선택한다.
+//		lmv.getCbmDay().setSelectedItem(new Integer(nowDay));// 오늘을 선택한다.
 
 	}// setDay
 

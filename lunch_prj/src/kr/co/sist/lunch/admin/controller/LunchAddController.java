@@ -40,7 +40,6 @@ public class LunchAddController extends WindowAdapter implements ActionListener 
 	 * 입력값과 이미지를 선택한 후 유효성 검증( 이미지, 도시락명,가격, 특장점이 입력되었다면 )
 	 */
 	private void addLunch() {
-
 		if(uploadImg.equals("")) {
 			JOptionPane.showMessageDialog(lav, "도시락 이미지를 선택해주세요.");
 			return;
@@ -90,8 +89,17 @@ public class LunchAddController extends WindowAdapter implements ActionListener 
 			uploadImg(file);
 			//리스트 갱신
 			lmc.setLunch();
+			//다음 도시락의 입력을 편하게 하기 위해서 입력 폼 초기화
+			jtfName.setText("");
+			jtfPrice.setText("");
+			jtaSpec.setText("");
 			
-			JOptionPane.showMessageDialog(lav, "도시락이 추가되었습니다.");}
+			lav.getJlLunchImg().setIcon(new ImageIcon("C:/dev/workspace/lunch_prj/src/kr/co/sist/lunch/admin/img/no_img.jpg"));
+			
+			JOptionPane.showMessageDialog(lav, "도시락이 추가되었습니다.");
+			
+			jtfName.requestFocus();}
+		
 			catch (IOException ie) {
 				JOptionPane.showMessageDialog(lav, "파일업로드 실패");
 				ie.printStackTrace();
