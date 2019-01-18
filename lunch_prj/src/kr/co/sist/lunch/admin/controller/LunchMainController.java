@@ -1,5 +1,6 @@
 package kr.co.sist.lunch.admin.controller;
 
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Menu;
 import java.awt.MenuItem;
@@ -193,6 +194,11 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 		}// end
 
 	}// mouseClicked
+	
+	private void msgCenter(Component parentComponent, String message) {
+		JOptionPane.showMessageDialog(parentComponent, message);
+		
+	}//msgCenter
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -210,22 +216,64 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 		} // end if
 
 		if(ae.getSource()==lmv.getJmOrderRemove()) {
-//			JOptionPane.showConfirmDialog(lmv, "정말 삭제인 부분");
+			//제작상태가 'N'인 상태에서만 동작
+			JTable jt = lmv.getJtOrder();
+			if(( (String)jt.getValueAt(selectedRow, 10)).equals("N") ){
+				switch(JOptionPane.showConfirmDialog(lmv, orderNum+" "+
+						lunchName+ " 주문정보를 삭제하시겠습니까?")){
+				case JOptionPane.OK_OPTION:
+					try {
+						if(la_dao.deleteOrder(orderNum)) {//DBTable에서 해당 레코드 삭제 
+						msgCenter(lmv, orderNum+"주문이 삭제 되었습니다.");
+						//주문 테이블 갱신 
+						searchOrder();
+					}else {
+						msgCenter(lmv, orderNum + "주문이 삭제 되지 않습니다.");
+					}//end else
+					}catch (SQLException e) {
+						msgCenter(lmv, "DB에서 문제 발생");
+						e.printStackTrace();
+					}//end catch
+					
+				}//end switch
+				
+			}else {
+				msgCenter(lmv, "제작된 도시락은 삭제할 수 없습니다.");
+			}//end else
+			JPopupMenu jp = lmv.getJpOrderMenu();//팝업 메뉴 숨김 
+			jp.setVisible(false);
 		}//end if
+		
 		if(ae.getSource()==lmv.getJmOrderStatus()) {
+			JTable jt = lmv.getJtOrder();
+			if(( (String)jt.getValueAt(selectedRow, 10)).equals("N") ){
+			
 			switch(JOptionPane.showConfirmDialog(lmv, "["+orderNum + lunchName 
 					+"]주문이 완료되었습니까?")) {
 			case JOptionPane.OK_OPTION:
-				JTable jt = lmv.getJtOrder();
-				jt.setValueAt("Y", selectedRow, 10); //테이블의 값만 변경
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////01-17-2019 : 주문 변경은 내일 .... 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				try {
+					//DB Table의 해당 레코드 변경
+					if(la_dao.updateStatus( orderNum)) {// 상태변환 성공
+						jt.setValueAt("Y", selectedRow, 10); //J테이블의 값만 변경
+						
+						JOptionPane.showMessageDialog(lmv, "도시락 제작이 완료되었습니다!!");
+					}else {//상태변환 실패
+						JOptionPane.showMessageDialog(lmv, "도시락 제작상태 변환이 실패!!!");
+					}//end else
+				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(lmv, "DB에서 문제 발생 ");
+					e.printStackTrace();
+				}//end catch
 				
 			}//end switch
+			}else {
+				JOptionPane.showMessageDialog(lmv, "이미 제작이 완료 된 도시락입니다.");
+			}//end else
+			
+			JPopupMenu jp = lmv.getJpOrderMenu();
+			jp.setVisible(false);//popup메뉴 숨김
 			
 		}//end if
-		
 		
 	}// actionPerformed
 

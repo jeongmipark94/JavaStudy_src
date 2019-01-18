@@ -50,7 +50,7 @@ public class LunchMainView extends JFrame{
 		String[] lunchColumns = {"번호","제품코드","이미지","도시락명","가격"};
 		dtmLunch = new DefaultTableModel(lunchColumns,	4) {
 			@Override
-			public boolean isCellEditable(int row, int column) {
+			public boolean isCellEditable(int row, int column) {/////값 변경 못하게 만듬. 
 				return false;
 			}//isCellEditable 
 		};

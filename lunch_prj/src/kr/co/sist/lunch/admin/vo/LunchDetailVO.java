@@ -4,6 +4,7 @@ public class LunchDetailVO {
 	private String lunch_code,lunch_name,img,spec,	input_date;
 	private int price;
 	
+	
 	public LunchDetailVO(String lunch_code, String lunch_name, String img, String spec, String input_date, int price) {
 		this.lunch_code = lunch_code;
 		this.lunch_name = lunch_name;

@@ -24,7 +24,7 @@ import kr.co.sist.lunch.admin.vo.LunchDetailVO;
 public class LunchDetailView extends JDialog {
 	
 	private JLabel jlLunchImg;
-	private JTextField jtfLunchCode, jtfLunchName, jtfLunchDate, jtfLunchPrice;
+	private JTextField jtfLunchCode, jtfLunchName, jtfLunchDate, jtfLunchPrice, jtfTotalPrice;
 	private JTextArea jtaLunchSpec;
 	private JButton jbImg, jbUpdate, jbDelete, jbEnd;
 	
@@ -50,6 +50,7 @@ public class LunchDetailView extends JDialog {
 		jtfLunchDate.setText(ldvo.getInput_date());
 		jtfLunchPrice.setText(String.valueOf(ldvo.getPrice()));
 		jtaLunchSpec.setText(ldvo.getSpec());
+		jtfTotalPrice.setText(String.valueOf(ldvo.getPrice()));
 		
 		jbImg = new JButton("이미지선택");
 		jbUpdate = new JButton("수정");
