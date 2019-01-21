@@ -333,6 +333,7 @@ public class LunchAdminDAO {
 			selectCalc.append("	select l.lunch_name,l.lunch_code,sum(o.quan) total,sum(o.quan)*l.price price	")
 					.append("	from lunch l, ordering o	").append("	where o.lunch_code=l.lunch_code	")
 					.append("	and to_char(o.order_date,'yyyy-mm-dd')=to_char(to_date(?,'yyyy-mm-dd'),'yyyy-mm-dd')	")
+					.append( " and o.status='Y' ")
 					.append("	group by l.lunch_code,l.lunch_name,l.price	").append("	order by l.lunch_code	");
 
 			pstmt = con.prepareStatement(selectCalc.toString());
