@@ -169,7 +169,7 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 				jt.clearSelection();
 			} // 선택된 행을 넣는다.
 			selectedRow = r;
-
+			System.out.println(selectedRow);
 //			int row = jt.getSelectedRow();
 //			
 //			if(row==-1) {
@@ -204,23 +204,19 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 
 ////////////////주문 탭에서 더블클릭한 경우 요청사항이 있다면 창 띄우기
 		if (me.getSource() == lmv.getJtOrder() && me.getClickCount() == DBL_CLICK) {/////////////////// ???????????
-			
+
 			JTable jt = lmv.getJtOrder();
-			orderNum= ((String) jt.getValueAt(selectedRow, 1));
-			System.out.println(orderNum);// 클릭했을 때 order Num 찍어보기
+			orderNum = ((String) jt.getValueAt(jt.getSelectedRow(), 1));
+			System.out.println(orderNum);// 클릭했을 때 orderNum 찍어보기
 			try {
 				String msg = la_dao.selectRequest(orderNum);
-				
-				if(msg==null) {
+				if (msg == null) {
 					JOptionPane.showMessageDialog(lmv, "요청사항이 없습니다.");
-				}else {
-					JOptionPane.showMessageDialog(lmv, "요청사항"+msg);
-					
+				} else {
+					JOptionPane.showMessageDialog(lmv, "요청사항 : " + msg);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
-			
 //			if(!ovo.getRequest().isEmpty()) {
 //				JOptionPane.showMessageDialog(lmv, "요청사항을 확인해주세요" + ovo.getRequest());
 //				requestFlag = true;
@@ -228,6 +224,7 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 //			}else {
 //				JOptionPane.showMessageDialog(lmv, "요청사항이 없습니다 ");
 //			}//end else
+			}
 		}
 	}
 
