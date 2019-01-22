@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import kr.co.sist.lunch.admin.controller.LunchDetailController;
 import kr.co.sist.lunch.user.controller.LunchOrderDetailController;
@@ -26,6 +27,7 @@ public class LunchOrderDetailView extends JDialog{
    private JTextArea jtaLunchSpec;
    private JButton jbOrder, jbEnd;
    private JComboBox<Integer> jbQuan;
+   private JTextField jtfRequest;
    
    public LunchOrderDetailView(LunchClientView lcv,LunchDetailVO ldvo) {
       super(lcv,ldvo.getLunchName()+"도시락 상세정보",true);///
@@ -38,6 +40,8 @@ public class LunchOrderDetailView extends JDialog{
       jtfLunchPrice=new JTextField( String.valueOf(ldvo.getPrice()));
       jtfPhone=new JTextField();
       jtfTotalPrice=new JTextField();
+      jtfRequest = new JTextField();
+      jtfRequest.setBorder(new TitledBorder("요청사항"));
       
       jtaLunchSpec=new JTextArea( ldvo.getSpec());
       jtaLunchSpec.setEditable(false);
@@ -85,8 +89,9 @@ public class LunchOrderDetailView extends JDialog{
        jlOrderName.setBounds(270, 185, 80, 25);
        jlOrderTel.setBounds(270, 215, 80, 25);
        jlLunchSpec.setBounds(270, 245, 80, 25);
-       
       
+       jtfRequest.setBounds(10, 275, 244, 100);
+       jtfRequest.setBackground(Color.white);
        
        jtfLunchName.setBounds(340, 65, 185, 25); 
        jtfLunchName.setEditable(false);
@@ -123,6 +128,7 @@ public class LunchOrderDetailView extends JDialog{
       add(jtfTotalPrice);
       add(jlOrderName);
       add(jtfOrderName);
+      add(jtfRequest);
    
       add(jlOrderTel);
       add(jtfPhone);
@@ -173,7 +179,12 @@ public JButton getJbEnd() {
 public JComboBox<Integer> getJbQuan() {
 	return jbQuan;
 }
+
+public JTextField getJtfRequest() {
+	return jtfRequest;
+}
    
+
    
    
 }//class

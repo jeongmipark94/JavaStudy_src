@@ -2,12 +2,12 @@ package kr.co.sist.lunch.admin.vo;
 
 public class OrderVO {
 	private String orderNum, lunchCode, lunchName, orderName,orderDate,
-			phone, ipAddress, status;
+			phone, ipAddress, status, request;
 	
 	private int quan, price;
 
 	public OrderVO(String orderNum, String lunchCode, String lunchName, String orderName, String orderDate,
-			String phone, String ipAddress, String status, int quan, int price) {
+			String phone, String ipAddress, String status, int quan, int price, String request) {
 		this.orderNum = orderNum;
 		this.lunchCode = lunchCode;
 		this.lunchName = lunchName;
@@ -18,6 +18,7 @@ public class OrderVO {
 		this.status = status;
 		this.quan = quan;
 		this.price = price;
+		this.request = request;
 	}
 
 	public String getOrderNum() {
@@ -59,12 +60,17 @@ public class OrderVO {
 	public int getPrice() {
 		return price;
 	}
+	
+
+	public String getRequest() {
+		return request;
+	}
 
 	@Override
 	public String toString() {
 		return "OrderVO [orderNum=" + orderNum + ", lunchCode=" + lunchCode + ", lunchName=" + lunchName
 				+ ", orderName=" + orderName + ", orderDate=" + orderDate + ", phone=" + phone + ", ipAddress="
-				+ ipAddress + ", status=" + status + ", quan=" + quan + ", price=" + price + "]";
+				+ ipAddress + ", status=" + status + ", quan=" + quan + ", price=" + price +", request=" + request + "]";
 	}
 	
 	

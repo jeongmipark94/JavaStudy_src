@@ -130,6 +130,8 @@ public class LunchOrderDetailController extends WindowAdapter implements ActionL
 					.append(lodv.getJtfLunchName().getText()).append("(").append(lunchCode).append(")\n")
 					.append("-----------------------------------------------------------\n").append("수량 : ")
 					.append(lodv.getJbQuan().getSelectedItem()).append("개\n")
+					.append("-----------------------------------------------------------\n").append("요청사항 : ")
+					.append(lodv.getJtfRequest().getText()).append("\n")
 					.append("-----------------------------------------------------------\n").append("결제금액 : ")
 					.append(lodv.getJtfTotalPrice().getText()).append("원\n")
 					.append("-----------------------------------------------------------\n").append("주문자 명 : ")
@@ -151,7 +153,7 @@ public class LunchOrderDetailController extends WindowAdapter implements ActionL
 			try {
 				OrderAddVO oavo = new OrderAddVO(lodv.getJtfOrderName().getText(), lodv.getJtfPhone().getText(),
 						InetAddress.getLocalHost().getHostAddress(), lunchCode,
-						lodv.getJbQuan().getSelectedIndex() + 1);
+						lodv.getJbQuan().getSelectedIndex() + 1,lodv.getJtfRequest().getText());
 
 				try {
 					LunchClientDAO.getInstance().insertOrder(oavo);

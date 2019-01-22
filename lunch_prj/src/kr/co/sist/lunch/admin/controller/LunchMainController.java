@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.nio.channels.ShutdownChannelGroupException;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
@@ -45,6 +46,9 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 	private String orderNum;
 	private String lunchName;
 	private int selectedRow;
+	private boolean requestFlag = false;
+
+	private OrderVO ovo;
 
 	private Thread threadOrdering;
 
@@ -112,7 +116,8 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 			dtm.setRowCount(0);// 초기화
 
 			Vector<Object> vec = null;
-			OrderVO ovo = null;
+			ovo = null;/////////////////////////////////////// OrderVO ovo = null; 있던 자리 전역변수로 올려줌.
+						/////////////////////////////////////// 아래에서 쓰려고 (더블클릭)
 			for (int i = 0; i < list.size(); i++) {
 				ovo = list.get(i);
 				vec = new Vector<Object>();
@@ -128,6 +133,7 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 				vec.add(ovo.getPhone());
 				vec.add(ovo.getIpAddress());
 				vec.add(ovo.getStatus());
+				vec.add(ovo.getRequest());
 				// 추가
 				dtm.addRow(vec);
 
@@ -173,13 +179,12 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 			JPopupMenu jp = lmv.getJpOrderMenu();
 			jp.setLocation(me.getXOnScreen(), me.getYOnScreen());
 			jp.setVisible(true);
-			orderNum = (String) jt.getValueAt(jt.getSelectedRow(), 1);
+			orderNum = (String) jt.getValueAt(jt.getSelectedRow(), 1);///////////////////////////// orderNum
 			lunchName = (String) jt.getValueAt(jt.getSelectedRow(), 3) + " "
 					+ (String) jt.getValueAt(jt.getSelectedRow(), 4);
 		} else {
 			JPopupMenu jp = lmv.getJpOrderMenu();
 			jp.setVisible(false);
-
 		} // end if
 
 		switch (me.getClickCount()) {
@@ -194,11 +199,37 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 					JOptionPane.showMessageDialog(lmv, "DB에서 문제가 발생했습니다.");
 					se.printStackTrace();
 				}
-			} // end if
+			}
+		}
 
-		}// end
-
-	}// mouseClicked
+////////////////주문 탭에서 더블클릭한 경우 요청사항이 있다면 창 띄우기
+		if (me.getSource() == lmv.getJtOrder() && me.getClickCount() == DBL_CLICK) {/////////////////// ???????????
+			
+			JTable jt = lmv.getJtOrder();
+			orderNum= ((String) jt.getValueAt(selectedRow, 1));
+			System.out.println(orderNum);// 클릭했을 때 order Num 찍어보기
+			try {
+				String msg = la_dao.selectRequest(orderNum);
+				
+				if(msg==null) {
+					JOptionPane.showMessageDialog(lmv, "요청사항이 없습니다.");
+				}else {
+					JOptionPane.showMessageDialog(lmv, "요청사항"+msg);
+					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+//			if(!ovo.getRequest().isEmpty()) {
+//				JOptionPane.showMessageDialog(lmv, "요청사항을 확인해주세요" + ovo.getRequest());
+//				requestFlag = true;
+//				return;
+//			}else {
+//				JOptionPane.showMessageDialog(lmv, "요청사항이 없습니다 ");
+//			}//end else
+		}
+	}
 
 	private void msgCenter(Component parentComponent, String message) {
 		JOptionPane.showMessageDialog(parentComponent, message);
@@ -252,32 +283,34 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 			JTable jt = lmv.getJtOrder();
 			if (((String) jt.getValueAt(selectedRow, 10)).equals("N")) {
 
-				switch (JOptionPane.showConfirmDialog(lmv, "[" + orderNum + lunchName + "]주문이 완료되었습니까?")) {
-				case JOptionPane.OK_OPTION:
-					try {
-						// DB Table의 해당 레코드 변경
-						if (la_dao.updateStatus(orderNum)) {// 상태변환 성공
-							jt.setValueAt("Y", selectedRow, 10); // J테이블의 값만 변경
+				if (requestFlag = true) {///////////////// 요청사항이 띄어진 경우,
 
-							JOptionPane.showMessageDialog(lmv, "도시락 제작이 완료되었습니다!!");
-						} else {// 상태변환 실패
-							JOptionPane.showMessageDialog(lmv, "도시락 제작상태 변환이 실패!!!");
-						} // end else
-					} catch (SQLException e) {
-						JOptionPane.showMessageDialog(lmv, "DB에서 문제 발생 ");
-						e.printStackTrace();
-					} // end catch
+					switch (JOptionPane.showConfirmDialog(lmv, "[" + orderNum + lunchName + "]주문이 완료되었습니까?")) {
+					case JOptionPane.OK_OPTION:
+						try {
+							// DB Table의 해당 레코드 변경
+							if (la_dao.updateStatus(orderNum)) {// 상태변환 성공
+								jt.setValueAt("Y", selectedRow, 10); // J테이블의 값만 변경
 
-				}// end switch
-			} else {
-				JOptionPane.showMessageDialog(lmv, "이미 제작이 완료 된 도시락입니다.");
-			} // end else
+								JOptionPane.showMessageDialog(lmv, "도시락 제작이 완료되었습니다!!");
+							} else {// 상태변환 실패
+								JOptionPane.showMessageDialog(lmv, "도시락 제작상태 변환이 실패!!!");
+							} // end else
+						} catch (SQLException e) {
+							JOptionPane.showMessageDialog(lmv, "DB에서 문제 발생 ");
+							e.printStackTrace();
+						} // end catch
 
-			JPopupMenu jp = lmv.getJpOrderMenu();
-			jp.setVisible(false);// popup메뉴 숨김
+					}// end switch
+				} else {
+					JOptionPane.showMessageDialog(lmv, "이미 제작이 완료 된 도시락입니다.");
+				} // end else
 
-		} // end if
+				JPopupMenu jp = lmv.getJpOrderMenu();
+				jp.setVisible(false);// popup메뉴 숨김
 
+			} // end if
+		} // end if requestFlag가 true 여서 창이 띄여진 경우.
 	}// actionPerformed
 
 	/**
@@ -351,7 +384,7 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 		try {
 			while (true) {
 				searchOrder();
-					Thread.sleep(1000 * 30); 		// 30초마다 한번씩 조회 수행
+				Thread.sleep(1000 * 30); // 30초마다 한번씩 조회 수행
 			} // end while
 		} catch (InterruptedException e) {
 			msgCenter(lmv, "주문 조회 중 문제가 발생했습니다.");

@@ -387,7 +387,7 @@ public class LunchAdminDAO {
 			StringBuilder selectOrder = new StringBuilder();
 			selectOrder.append("	select	o.order_num, l.lunch_code, l.lunch_name, o.order_name,					")
 					.append("	o.quan, l.price*o.quan price, to_char(o.order_date,'yyyy-mm-dd hh:mi:ss') order_date,		")
-					.append("	o.phone, o.ip_address, o.status																	")
+					.append("	o.phone, o.ip_address, o.status, o.order_request																	")
 					.append("	from	lunch l, ordering o																				")
 					.append("	where	o.lunch_code=l.lunch_code																")
 					.append("	and to_char(order_date,'yyyy-mm-dd')= to_char(sysdate,'yyyy-mm-dd')	"	)
@@ -404,7 +404,7 @@ public class LunchAdminDAO {
 			while (rs.next()) {
 				ovo = new OrderVO(rs.getString("order_num"), rs.getString("lunch_code"), rs.getString("lunch_name"),
 						rs.getString("order_name"), rs.getString("order_date"), rs.getString("phone"),
-						rs.getString("ip_address"), rs.getString("status"), rs.getInt("quan"), rs.getInt("price"));
+						rs.getString("ip_address"), rs.getString("status"), rs.getInt("quan"), rs.getInt("price"),rs.getString("order_request"));
 
 				list.add(ovo);
 			} // end while
@@ -500,6 +500,54 @@ public class LunchAdminDAO {
 		return flag;
 	}// deleteOrder
 
+	public String selectRequest(String orderNum) throws SQLException { //select 는 result set으로 값을 받는다.
+		//프로시저만 callable  //쿼리는 preparedStatement //쿼리 짤 때 바인드 변수 필요한지 판단 orderNum이 바뀌니 바인드 변수 필요 
+		String msg="";
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+		//1
+		//2
+			con = getConn();
+		//3
+//			//3
+//			String selectLunch 
+//					= "select img, lunch_name, spec, price from lunch where lunch_code=?";
+//			pstmt=con.prepareStatement(selectLunch);
+//		//4
+//			pstmt.setString(1, lunchcode);
+//		//5
+//			rs=pstmt.executeQuery();
+//			
+//			if(rs.next()) {
+//				ldvo= new LunchDetailVO(lunchcode, rs.getString("lunch_name"),
+//						rs.getString("spec"),rs.getString("img"),rs.getInt("price"));
+//			}
+			
+			String selectRequest 
+					= " select order_request from ordering where order_num=? "; 
+			pstmt=con.prepareStatement(selectRequest);
+		//4
+			pstmt.setString(1, orderNum);
+		//5         /////////////////??????????????
+			rs=pstmt.executeQuery();
+			if(rs.next()) { //결과 존재시 
+				msg= rs.getString("order_request"); //컬럼명
+			}
+		}finally {
+		//6 연결 끊기
+			if(rs!=null) {rs.close();}//end if
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}//end if
+	
+		return msg;
+	}
+	
+	
 	public static void main(String[] args) {
 		try {
 			System.out.println(getInstance().selectOrderList());
