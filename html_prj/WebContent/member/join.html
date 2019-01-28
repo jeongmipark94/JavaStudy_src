@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>오늘의 숙제</title>
+</head>
+<body>
+	<!--  행은 총 17행 -->
+
+	<table border="1" width="500" align="center">
+		<tr>
+			<td colspan="2" align="center" height="50">회원가입</td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="50">아이디</td>
+			<td align="center">
+				<input type="id" name="id" size="10" maxlength="20" readonly="readonly"/>
+				<input type= "button" value="중복확인"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="50">비밀번호</td>
+			<td align="center" ><input type="password" name="pass" size="10" maxlength="20"/></td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="50">비밀번호 확인</td>
+			<td align="center" ><input type="repassword" name="repass" size="10" maxlength="20"/></td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="50">이름</td>
+			<td align="center" ><input type="name" name="name" size="10" maxlength="20"/> </td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="50">주민번호</td>
+			<td align= "center"><input type="rrn_1" name="rrn_1" size="6" maxlength="6"/> -
+			<input type="password" name="rrn_2" size="7" maxlength="7"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="50">성별</td>
+			<td align= "center"><input type = "radio" name="gender" />남자
+			<input type = "radio" name="gender" />여자</td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="50">생년월일</td>
+			<td align= "center"><input type="date" name="date" value="2019-01-01"/></td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="50">나이</td>
+			<td align= "center"><input type="age" name="age" size="3" maxlength="3"/></td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="130">관심언어</td>
+			<td align= "center">
+			<input type="checkbox" value="Java" name="lang">Java
+			<input type="checkbox" value="C/C++" name="lang">C/C++
+			<input type="checkbox" value="python" name="lang">python
+			<input type="checkbox" value="VB" name="lang">VB<br/>
+			<input type="checkbox" value="JSP" name="lang">JSP
+			<input type="checkbox" value="Servlet" name="lang">Servlet
+			<input type="checkbox" value="ASP" name="lang">ASP
+			<input type="checkbox" value="php" name="lang">php<br/>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="50">결혼여부</td>
+			<td align= "center"><input type="radio" checked="checked" name="marry">미혼
+										   <input type="radio"  name="marry">기혼</td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="50">결혼기념일</td>
+			<td align= "center">
+				<input type="text" name="marry_1" size="4" maxlength="4">년 
+				<input type="text" name="marry_2" size="4" maxlength="2">월 
+				<input type="text" name="marry_3" size="4" maxlength="2">일</td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="50">우편번호</td>
+			<td align= "center">
+				<input type="text" name="addr_num1" size="5" maxlength="5"/> -
+				<input type="text" name="addr_num2" size="5" maxlength="5"/>
+				<input type="button" value="우편번호확인"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="50">주소</td>
+			<td align= "center">
+			<input type="text" name="addr" size="30" maxlength="30"/></td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="50">상세주소</td>
+			<td align= "center">
+			<input type="text" name="detail_addr" size="30" maxlength="30"/></td>
+		</tr>
+		<tr>
+			<td align="center" width="120" height="100">가입인사</td>
+			<td align= "center">
+				<textarea row="50" cols="50" name="ta"/></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align= "center" height="50">
+				<input type="button" value="가입"/>
+				<input type="button" value="초기화"/>
+			
+			</td>
+		</tr>
+
+	</table>
+
+
+	<!-- 테이블로 하되 border는 없다. -->
+</body>
+</html>
