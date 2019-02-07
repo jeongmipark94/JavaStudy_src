@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/css/main_v20190130.css"/ >
+<style type="text/css">
+div{width: 500px; height: 400px; border: 2px solid;}
+marquee { width: 500px; height: 400px; border: 2px solid;}
+</style>
+<script type="text/javascript">
+	var direction = prompt("방향을 입력해주세요(up,down,left,right)"," ");
+	var msg = prompt("메세지를 입력해주세요","");
+
+	if(direction=="up" || direction=="UP"){
+		document.write("<marquee scrollamount ='10' direction='up'>∧<br/>"+msg+"</marquee>");
+	}else if(direction=="down" || direction=="DOWN"){
+		document.write("<marquee scrollamount ='10' direction='down'>"+msg+"<br/>∨</marquee>");
+	}else if(direction=="left" || direction=="LEFT"){
+		document.write("<marquee scrollamount ='10' direction='left'>＜"+msg+"</marquee>");
+	}else if(direction=="right" || direction=="RIGHT"){
+		document.write("<marquee scrollamount ='10' direction='right'>"+msg+"></marquee>");
+	}else{
+		alert("올바른 방향을 입력해주세요");
+	}//end else
+	
+		
+		
+</script>
+
+</head>
+<body>
+
+</body>
+</html>
