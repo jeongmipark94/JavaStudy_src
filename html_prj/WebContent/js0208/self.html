@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/css/main_v20190130.css"/ >
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+
+
+
+
+var row = prompt("행의 수"," ");
+var col = prompt("열의 수"," ");
+var color= prompt("선색(RGB값)","#000000");
+
+document.write("<table width='500' height='500' border='1' bordercolor='"+color+"'>");
+for(var i=0; i<row; i++ ){
+	document.write("<tr>");
+	
+	 for(var j=1; j<=col; j++){
+		document.write("<td>");
+		document.write("</td>");
+	}//end for j 
+	document.write("</tr>");
+}//end for i 
+
+document.write("</table>")
+
+</script>
+</head>
+<body>
+
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/css/main_v20190130.css"/ >
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+var data= new  Array();
+data[0] = new Array();
+data[1] = new Array();
+data[2] = new Array();
+
+data[0][0]="이재찬";
+data[0][1]="이봉현";
+data[0][2]="박은영";
+data[0][3]="백인재";
+data[0][4]="김민정";
+data[0][5]="김정운";
+data[0][6]="정택성";
+
+data[1][0]="박영민";
+data[1][1]="김정윤";
+data[1][2]="김희철";
+data[1][3]="이지수";
+data[1][4]="박소영";
+data[1][5]="노진경";
+data[1][6]="최지우";
+
+data[2][0]="공선의";
+data[2][1]="오영근";
+data[2][2]="김건하";
+data[2][3]="박정미";
+data[2][4]="최혜원";
+data[2][5]="이재현"; 
+
+var name = prompt("이름 입력해주세요","");
+var flag = false;
+var pick = 0;
+
+for(var i=0; i< data.length; i++ ){
+	for(var j=0; j<data[i].length; j++){
+		if(name == data[i][j]){
+			flag =true;
+			pick = i;
+		}
+	}
+}
+if(flag==true){
+document.write("입력된 이름 "+name+"<br/> 조 :"+(pick+1)+"<br/> 구성원 :");
+
+for(var i=0; i<data[pick].length; i++ ){
+	document.write(data[pick][i] +"/") }	;
+	}else if(flag==false){
+			alert("해당 인물은 존재하지 않습니다.")
+		}
+
+
+
+
+
+</script>
+</head>
+<body>
+
+
+</body>
+</html>
