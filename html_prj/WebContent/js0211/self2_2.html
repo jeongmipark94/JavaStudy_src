@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/css/main_v20190130.css"/ >
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+
+function result(){
+	var obj = document.input;
+	var temp = "";
+	var dan = obj.dan.value;//입력받은 단의 값 얻기
+	var divNode=document.getElementById("output");
+	if(dan<2 || dan>9){
+		/* alert("구구단은 2~9단 사이입니다."); */
+		temp+="구구단은 2~9단 사이입니다.<br/>";
+		temp+="<marquee scrollamount='80' direction='left'><img src = '../common/images/img2.jpg'></marquee>";
+		divNode.innerHTML=temp;	
+	}else{
+		temp+="<table border='1'>";
+		for(var i=1 ; i<10; i++){
+			temp+="<tr height=50px><td width=300px onclick='alert("+(dan*i)+"입니다)'>";
+			temp+=dan+"X"+i;
+	/* 		document.write(dan*i); */
+			temp+="</td></tr>";
+			
+		}//for
+		temp+="</table>";
+		divNode.innerHTML=temp;		
+		
+	}//else
+	//출력 
+	
+}//result
+
+</script>
+
+</head>
+<body>
+	<form name="input">
+		<label>구구단</label>
+		<input type="text" name="dan" id="dan" class="inputBox"> 
+		<input type="button" value="입력" class="btn" onclick="result()">
+	</form>
+	<div id="output">
+	</div>
+</body>
+</html>

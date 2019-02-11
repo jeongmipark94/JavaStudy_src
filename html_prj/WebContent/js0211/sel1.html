@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/css/main_v20190130.css"/ >
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+	
+	function repeat(){
+		var obj = document.self;
+		
+		var name = obj.name.value;
+		var divNode =document.getElementById("output");
+		
+		var output=
+				"<h1>"+name+"</h1><br/><h2>"
+				+name+"</h2><br/><h3>"
+				+name+"</h3><br/><h4>"
+				+name+"</h4><br/><h5>"
+				+name+"</h5><br/><h6>"
+				+name+"</h6><br/>"
+				
+				divNode.innerHTML=output;
+	}//repeat
+	
+</script>
+</head>
+<body>
+	<form name="self">
+	<label>이름</label>
+	<input type="text" name="name" id="name" class="inputBox">
+	<input type="button" value="입력" class="btn" onclick="repeat()">
+	</form>
+	<div id="output">
+	
+	</div>
+
+</body>
+</html>
