@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/css/main_v20190130.css"/ >
+<style type="text/css">
+	#diceWrap{ border:1px solid #333; width: 500px; height: 400px; 
+				box-shadow: 10px 10px 10px #333 ;
+				margin-left: 100px; margin-top: 10px} 
+	#inputHeader{ height:150px; }
+	#score{ height:30px; text-align: center;}
+	#diceView{ width: 500px; text-align: center; margin-top: 50px}
+	h2{text-align: center;}
+</style>
+<script type="text/javascript">
+	
+	/* window.onload=function(){
+		var obj=document.frm;
+		
+		var num1=parseInt(Math.random()*6)+1;
+		var num2=parseInt(Math.random()*6)+1;
+		
+		obj.dice1.src="images/dice_"+num1+".png";
+		obj.dice2.src="images/dice_"+num2+".png";
+		
+	}//function */
+	var flag1= false;
+	var flag2=false;
+	window.onload=function(){
+		obj=document.frm;
+		turnflag=false;
+		document.getElementById("setUser").addEventListener("click",setStart);
+		document.getElementById("throw").addEventListener("click",throwDice);
+		document.getElementById("back").addEventListener("click",backAll);
+		
+	}//function
+	
+	/* function flag1(){
+		alert("111");
+		flag1=true;
+	}//flag1
+	
+	function flag2(){
+		flag2=true;
+	}//flag2 */
+	
+	/* function startF(){
+		var obj=document.frm;
+		if(obj.){
+			
+		}
+	}//startF */
+	
+	function setDice(){
+		//var obj=document.frm;
+		var num1=parseInt(Math.random()*6)+1;
+		var num2=parseInt(Math.random()*6)+1;
+		
+		obj.dice1.src="images/dice_"+num1+".png";
+		obj.dice2.src="images/dice_"+num2+".png";
+		
+		var sum1=num1+num2;
+		turnflag=true;
+		alert(sum1);
+		
+	}//setDice();
+	function throwDice(){
+		//var obj=document.frm;
+		var flag1 =document.frm.turn1.checked;
+		var flag2 = document.frm.turn2.checked;
+		
+		if(flag1==true ||turnflag==true && flag1!=flag2 ){
+			setDice();
+		}else{
+			alert("재확인!");
+			document.frm.turn1.checked=false;
+			document.frm.turn2.checked=false;
+		}
+	}//throwDice;
+	
+	
+	function setStart(){
+		//var obj =document.frm;
+		if(obj.player1.value!="" && obj.player2.value!=""){
+			var p1Name = obj.player1.value;
+			var p2Name=obj.player2.value;
+
+			var divNode = document.getElementById("p1Name");
+			var output = p1Name;
+			divNode.innerHTML=output;
+		
+			var divNode2= document.getElementById("p2Name");
+			var output2= p2Name;
+			divNode2.innerHTML=output2;
+		}else{
+			alert("사용자를 입력");
+		}//end else
+	}//setstart
+	
+	function backAll(){
+		
+	}//backAll
+	
+</script>
+</head>
+<body>
+
+<div id="diceWrap">
+		<form name="frm">
+			<div id="inputHeader">
+			<h2>주사위 게임</h2>
+				<div>
+					<label>사용자1</label>
+					<input type="text" name="player1" class="inputBox">
+					<label>사용자2</label>
+					<input type="text" name="player2" class="inputBox">
+					<input type="button"  id="setUser" value="참여설정" class="btn" />
+				</div>
+				<div style="text-align: center; margin-top: 10px">
+					<input type="radio" name="turn1"><span id="p1Name"></span>
+					<input type="radio" name="turn2"><span id="p2Name"></span>
+				<input type="button" id="throw" value="던지기" class="btn" />
+				</div>
+			</div>
+			<div id="score">
+				판정 : <span id="result"></span><br/>
+				<input type="button" id="back" value="초기화" class="btn"/>
+			</div>
+			<div id="diceView">
+				<img src="images/dice_1.png" name="dice1"/>
+				<img src="images/dice_1.png" name="dice2"/>
+			</div>
+		</form>
+</div>
+
+</body>
+</html>
+
+

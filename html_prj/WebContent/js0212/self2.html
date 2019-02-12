@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/css/main_v20190130.css"/ >
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+function chgImg(){
+	var obj = document.frm;
+	
+	var size=obj.selsize.value;//range의 값
+	var img=obj.resizeImg; //크기변경할 이미지
+	img.width=size;//크기 변경할 이미지의 크기를 range의 값으로 변경한다.
+}//
+/* 
+	window.onload=function(){
+		
+		obj = document.frm;
+		
+		obj.range.value=30;
+		var size=obj.range.value;
+		
+		
+	}//function */
+
+</script>
+</head>
+<body>
+
+	<form name="frm">
+	<div style="height:400px">
+	<img src="../common/images/cat2.jpg" name="resizeImg"/>
+	</div>
+	30<input type="range" name="selsize" min="30" max="300" value="30" onmousemove="chgImg()"/>300
+	<div id="out"></div>
+	</form>
+</body>
+</html>
