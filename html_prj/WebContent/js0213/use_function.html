@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/css/main_v20190130.css"/ >
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+window.onload=function(){
+	var obj= document.loginFrm;
+	obj.id.focus();
+}//function
+//아이디에서 엔터가 눌려지면 아이디가 입력되었는지 확인하고 입력되었으면
+//커서를 비밀번호로 이동 시킨다.
+//비밀번호에서 엔터가 눌려지면 아이디가 입력되었는지 확인하고 입력되었으면
+//비밀번호가 입력되었는지 확인하고 비밀번호가 입력되어있지 않으면 커서를 비밀번호로
+//이동 시킨다.
+//아이디와 비밀번호 어디든 엔터가 쳐지고 값이 들어있다면 alert("로그인")을 출력한다. 
+function chkNull(){
+	var obj=document.loginFrm;
+	
+	/* alert("눌린키의 코드 값 : "+ window.event.keyCode +" / "+
+				window.event.which); */
+		if(window.event.keyCode==13){
+		if(obj.id.value.trim() == ""){
+			obj.id.value="";
+			obj.id.focus();
+			return;
+		}//end if
+		if(obj.pwd.value.trim() == ""){
+			obj.pwd.value="";
+			obj.pwd.focus();
+			return;
+		}//end if
+		alert("로그인 성공 !!!!!!!!");
+		}
+		
+	/* if(document.getElementById("id").value!=""){
+		obj.pwd.focus();
+	} */			
+	/*if( window.event.keyCode ==13){
+		obj.id.focus();
+	}//end if*/
+}//chkNull
+
+function viewCase(flag){
+	var divNode=document.getElementById("resultDiv1");
+	var output="";
+	var data= document.textFrm.text.value;
+	
+	var caseText="";
+	if(flag=="lc"){//소문자
+		//caseText=[A~Z0-1];
+		output="소문자 : ";	
+	output +=data.replace(/[A-Z0-9]/g,"");
+	}//end if
+	if(flag=="uc"){//대문자
+		//caseText="";
+		output="대문자 : ";	
+	output += data.replace(/[a-z0-1]/g,"");
+	}//end if
+	if(flag=="nc"){//숫자
+		//caseText="";
+		output="숫자 : ";	
+	output += data.replace(/[A-Za-z]/g,"");
+	}//end if
+	
+	
+	divNode.innerHTML= output;
+	
+}//viewCase
+
+function checkMail(){
+	var divNode= document.getElementById("resultDiv");
+	var resultDiv="";
+	var obj=document.emailFrm;
+	
+	if(obj.email.value.indexOf("@")>4 && obj.email.value.indexOf(".")>5){
+		resultDiv+= obj.email.value+"는 유효한 메일입니다.";
+	}else{
+		resultDiv+="잘못된 메일 형식";
+	}//else
+	divNode.innerHTML =resultDiv;
+}//if
+
+</script>
+</head>
+<body>
+<div id="loginBox">
+<form name="loginFrm">
+<table>
+	<tr>
+		<td>
+			<!-- <input type="text" name="id" id="id" tabindex ="1" placeholder="아이디"  autofocus="autofocus" title="아이디" class="inputBox"/> -->
+			<input type="text" name="id" id="id" tabindex ="1" placeholder="아이디"  title="아이디" class="inputBox" onkeydown="chkNull()"/>
+		</td>
+		<td rowspan="2">
+			<input type="button" value="로그인" class="btn"tabindex ="3" style="width:50px;height:50px"/>
+			</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="password" name="pwd" id="pwd"  tabindex ="2" placeholder="비밀번호" title="비밀번호" class="inputBox" onkeydown="chkNull()"/>
+		</td>
+	</tr>
+</table>
+</form>
+</div>
+<div>
+<form name="emailFrm">
+<!-- 입력된 이메일이 5글자 이상이면서  @과 . 이 존재하는지 둘 다 있으면 입력한 메일과 "유효한 메일" 메세지를
+resultDiv에 출력하고 그렇지 않으면 "잘못된 메일"을 글자색이 #FF0000으로 resultDiv에 출력  -->
+	<label>이메일</label>
+	<input type="text" name="email" class="inputBox" id="email"/>
+	<input type="button" value="유효성검증" class="btn"/ onclick="checkMail()">
+</form>
+<div id="resultDiv"></div>
+</div>
+
+
+
+<form name="textFrm">
+	<label>문자열 입력</label>
+	<input type="text" name="text" class="inputBox" value="abC12Dbef1zABc55" id="text"/>
+	<input type="button" value="소문자" class="btn" onclick="viewCase('lc')"/>
+	<input type="button" value="대문자" class="btn" onclick="viewCase('uc')"/>
+	<input type="button" value="숫자" class="btn" onclick="viewCase('nc')"/>
+</form>
+<div id="resultDiv1"></div>
+</div>
+</body>
+</html>
