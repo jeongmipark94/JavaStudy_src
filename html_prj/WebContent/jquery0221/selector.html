@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/css/main_v20190130.css"/ >
+<style type="text/css">
+
+</style>
+<!-- CDN을 사용하여 jQuery를 다운로드 받아 사용 -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+<!-- 다운로드 받은 js를 사용 -->
+<script type="text/javascript" src= "../common/js/jquery2.2.4.min.js"></script>
+
+<script type="text/javascript">
+
+	$(function(){
+	//	$(document).ready(function(){
+	//$(window).load(function){
+		//	$("div").css("background-color", "#FF0000");    안됨ㅠ		
+//ID Selector : #ID명
+	//$("#a").css("background-color", "#FF0000");
+		
+//class Selector : .클래스명
+//	$(".b").css("background-color", "#FF0000");
+	
+//tag selector( single ) : 태그명 
+//	$("p").css("background-color", "#FF0000");
+	//$("li").css("background-color", "#FF0000");
+	//$("div").css("background-color", "#FF0000");
+			
+//tag selector( multiple ) : 태그명 
+	//$("div,span,a").css("background-color", "#FFAAFF");
+
+//sub selector( multiple ) : 태그명 > 태그명 
+	//$("div > p").css("background-color", "#00AAFF");//div안에있는 p만 적용
+	//$("div > p> span").css("background-color", "#00AAFF");//div안에있는 p안에있는 span만 적용
+
+ // 	가장 처음 태그만 : 태그명.first, 
+	//$("li:first").css("background-color", "#00AAFF");//li중에 가장 처음 나오는 태그
+
+//	   가장 마지막 태그만 : 태그명.last
+	//$("li:last").css("background-color", "#00AAFF");//li중에 가장 처음 나오는 태그
+	//$("ol> li:last").css("background-color", "#AAAAFF");//li중에 가장 처음 나오는 태그
+
+//	   홀수번째 태그만 : 태그명.odd,
+	//$("li:odd").css("background-color", "#AAAAFF");//li중에 가장 처음 나오는 태그
+	
+//	   짝수번째 태그만 : 태그명.even,
+	//$("li:even").css("background-color", "#AAAAFF");//li중에 가장 처음 나오는 태그
+	//$("ol> li:even").css("background-color", "#AAAAFF");//li중에 가장 처음 나오는 태그
+	
+	//특정 인덱스 번째 : 태그명 :eq(인덱스)
+	//$("li:eq(2)").css("background-color", "#AAAAFF");//li중에 가장 처음 나오는 태그
+	//$("ul>li:eq(2)").css("background-color", "#AAAAFF");//li중에 가장 처음 나오는 태그
+	
+//attribution selector (속성 셀렉터) : [속성명 = '값']
+	//$("[type= 'text']").css("background-color", "#AAAAFF");	
+	//$("[name= 'name']").css("background-color", "#AAAAFF");	
+	//$("[value= '이름']").css("background-color", "#AA44FF");	
+	//$("[id= 'name']").css("background-color", "#A644FF");	//가급적이면 id로 찾아주는게 좋음
+	//$("[class= 'name']").css("background-color", "#AA999F"); 	
+	//$("[target= 'b']").css("background-color", "#ACC99F"); 	
+	//$("a[target= 'b']").css("background-color", "#ACCA9C"); 	
+	
+	//$(" tr:even").css("background-color", "#AAAAAA");//홀수행 o
+	$("tr:eq(0)>td:eq(0),tr:eq(1)>td:eq(0),tr:eq(2)>td:eq(2)").css("background-color", "#FF0000")		//1,4,9번에 색 칠하기
+	
+	//특정 태그의 class를 식별하여 적용
+	//p의 클래스가 c인 태그에만 적용 : 태그명.class명
+	//$("p.c").css("background-color", "#AAAAAA");//홀수행
+	$("div.c").css("background-color", "#FFAAAA");//홀수행
+	});
+	
+//$("div").css("background-color", "#FF0000");
+
+</script>
+
+</head>
+<body>
+<strong>selector의 사용</strong>
+<div id="a">id가 a인 DIV</div>
+<p class="b">처음 P</p>
+<p class="c">class 가 c인 두번째 P</p>
+<div class="c">class가 c인 DIV</div>
+<div class="b">
+	<p> DIV안 P <span>DIV &gt; P&gt; SPAN</span></p>
+</div>
+<span>SPAN</span>
+<p>세번째 P</p>
+<ol>
+	<li>사과</li>
+	<li>배</li>
+	<li>포도</li>
+	<li>딸기</li>
+</ol>
+<ul>
+	<li>서울</li>
+	<li>경기</li>
+	<li>충청</li>
+	<li>경상</li>
+	<li>전라</li>
+	<li>제주</li>
+</ul>
+<a href = "#Void" target="a">링크1</a><br/>
+<a href = "#Void" target="b">링크2</a><br/>
+<a href = "#Void" target="c">링크3</a><br/>
+<input type="text" name="name" value="이름" id="name" class="name"/>
+
+<table border="1">
+<tr>
+	<td width="50">1</td>
+	<td width="50">2</td>
+	<td width="50">3</td>
+</tr>
+<tr>
+	<td>4</td>
+	<td>5</td>
+	<td>6</td>
+</tr>
+<tr>
+	<td>7</td>
+	<td>8</td>
+	<td>9</td>
+</tr>
+
+</table>
+
+</body>
+</html>
+
+
+
+
+
