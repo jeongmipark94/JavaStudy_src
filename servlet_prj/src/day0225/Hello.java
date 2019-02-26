@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.org.apache.xml.internal.serialize.Printer;
 //1. HttpServlet상속받는다
 public class Hello extends HttpServlet {
 		//2.요청 방식을 처리할 수 있는 추상 method를 Override
@@ -26,8 +25,9 @@ public class Hello extends HttpServlet {
 			out.println("<body>");
 			out.println("<strong>안녕 Servlet!!!</strong><br/>");
 			out.println("난 김정윤이라고해<br/>");
-			out.println("2019년 02월 25일 입니다.");
-			
+			out.println("2019년 02월 25일 입니다.<br/>");
+			out.println("요청"+ request+"<br/>");
+			out.println("응답"+ response+"<br/>");
 			out.println("</body>");
 			out.println("</html>");
 	}//doGet

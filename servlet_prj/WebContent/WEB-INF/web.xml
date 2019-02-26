@@ -19,4 +19,24 @@
     <servlet-name>hello</servlet-name>
     <url-pattern>/hello</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>life_cycle</display-name>
+    <servlet-name>life_cycle</servlet-name>
+    <servlet-class>day0226.LifeCycle</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>life_cycle</servlet-name>
+    <url-pattern>/life_cycle</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TestCall</display-name>
+    <servlet-name>TestCall</servlet-name>
+    <servlet-class>day0226.TestCall</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestCall</servlet-name>
+    <url-pattern>/TestCall</url-pattern>
+  </servlet-mapping>
 </web-app>
