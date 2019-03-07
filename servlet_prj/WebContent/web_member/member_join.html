@@ -240,25 +240,7 @@
    }//daumZip */
    
    function popupCenter(){
-	   var width=0;
-	   var height=0;
-	   var html="";
-	   var id="";
-	   
-	   if(this.id=="idDup"){
-			id="idDup";
-			html="id_dup.html";
-			width=502;
-			height=303;
-	   }//end if
-	   if(this.id=="searchZip"){
-			id="searchZip";
-			html="search_zip.html";
-			width=408;
-			height=419;
-	   }//end if
-	   
-	   window.open(html, id, "width="+width+",height="+height);
+	   window.open("../id_dup", "idDup", "width=502,height=303");
    }//
 </script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -325,8 +307,8 @@
 <div id="wrap">
 <div id="joinHeader"></div>
 <div id="joinContent">
-   <form action="member.jsp" name="joinFrm">
-      <table  >
+   <form action="../web_member_join" name="joinFrm" method="post">
+      <table >
    
          <tr>
             <td class="tdAlign" colspan="2"><span id="joinTitle">회원가입</span></td>
