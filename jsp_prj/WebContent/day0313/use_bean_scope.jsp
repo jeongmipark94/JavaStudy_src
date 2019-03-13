@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"
-    info="외부 JSP Page지시자"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,15 +24,34 @@
 			<div id="headerTitle"> SIST Class4</div>
 			</div>
 	<div id="container">
-		<div>
-		<%String name="노진경"; %>
-		<strong>외부 JSP</strong>
-		<!-- action태그는 변수나 method의 공유가 되지 않는다 : 각각의 class로 생성되고 JVM에서 
-		각각의 instance가 생성되므로 다른 instance내의 변수는 사용할 수 없다.  -->
-		<jsp:include page="include_action_b.jsp"/>
-		<strong>외부 JSP</strong>
-		<%= name %><br/>
-	<%-- 	삽입된 JSP 변수 : <%= msg %> --%>
+	<!--
+	 page : 기본속성, 요청할 때마다 객체 생성되며, 생성된 객체는 현재 페이지에서만 사용.
+	 request : 요청할 때마다 객체 생성되며, 생성된 객체는 현재 페이지와 forward로
+	 				이동한 페이지에서 사용.
+	 session : 접속자마다 하나의 객체가 생성되며, 생성된 객체는 모든 JSP에서 사용할 수 있다.
+	 				접속을 종료하면 사라진다.
+	 application : 최초 접속자에의해 하나의 객체가 생성된다. 생성된 객체는 모든 JSP에서 
+	 			모든 접속자가 사용한다. ( 공용 ).
+	 			Container가 종료되면 사라진다.
+	 -->
+		<jsp:useBean id="c_vo"  class="day0313.CounterVO" scope="session"/>
+		<jsp:setProperty property="cnt" name="c_vo" value="1"/>
+		안녕하세요?<br/>
+		이 페이지의 [ <strong><jsp:getProperty property="cnt" name="c_vo"/></strong>]
+		번째 방문자 입니다.<br/>
+		<div><!-- 방문자 수를 표시해주는 숫자 이미지를 띄우기  -->
+		<%
+		String cnt=String.valueOf(c_vo.getCnt());
+		
+		
+		char temp=' ';
+		for(int i=0; i< cnt.length(); i++){
+			temp=cnt.charAt(i);
+		%>	
+			<img src="images/num_<%= temp %>.png" title="<%=temp %>"/>
+		<%	
+		}//end for
+		 %>
 		</div>
 	</div>
 	<div id="footer">

@@ -1,6 +1,8 @@
+<%@page import="java.util.Random"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    info="외부 JSP Page지시자"%>
+    info="redirect의 사용"
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,16 +27,17 @@
 			<div id="headerTitle"> SIST Class4</div>
 			</div>
 	<div id="container">
-		<div>
-		<%String name="노진경"; %>
-		<strong>외부 JSP</strong>
-		<!-- action태그는 변수나 method의 공유가 되지 않는다 : 각각의 class로 생성되고 JVM에서 
-		각각의 instance가 생성되므로 다른 instance내의 변수는 사용할 수 없다.  -->
-		<jsp:include page="include_action_b.jsp"/>
-		<strong>외부 JSP</strong>
-		<%= name %><br/>
-	<%-- 	삽입된 JSP 변수 : <%= msg %> --%>
-		</div>
+	<%
+	//정상적인 요청으로 이 페이지를 방문하면 정상적인 응답을 해주지만
+	//비정상적인 요청이 있다면 다른 페이지로 이동할 때 사용.
+	if(new Random().nextBoolean()){//비정상적인 요청
+		//response 내장객체를 사용하여 이동
+		response.sendRedirect("redirect_b.jsp");//URL을 받으므로 외부 site로 이동도 가능.
+		return;
+	}//end if
+	%>
+	<img src="../common/images/img.png" title="내 목뼈는 정상임."/>
+	
 	</div>
 	<div id="footer">
 		<div id="footerTitle">copyright&copy; all reserved. class 4 </div>

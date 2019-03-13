@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"
-    info="외부 JSP Page지시자"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,16 +24,14 @@
 			<div id="headerTitle"> SIST Class4</div>
 			</div>
 	<div id="container">
-		<div>
-		<%String name="노진경"; %>
-		<strong>외부 JSP</strong>
-		<!-- action태그는 변수나 method의 공유가 되지 않는다 : 각각의 class로 생성되고 JVM에서 
-		각각의 instance가 생성되므로 다른 instance내의 변수는 사용할 수 없다.  -->
-		<jsp:include page="include_action_b.jsp"/>
-		<strong>외부 JSP</strong>
-		<%= name %><br/>
-	<%-- 	삽입된 JSP 변수 : <%= msg %> --%>
-		</div>
+	
+	<%@ include file="use_session_b.jsp" %>
+	<strong><%= ses_name %></strong>님의 작업 페이지<br/>
+	<a href="use_session_c.jsp">로그아웃</a><br/>
+	
+	<a href="job_b.jsp">작업페이지2</a><br/>
+	<img src="../common/images/img.png"/>
+	
 	</div>
 	<div id="footer">
 		<div id="footerTitle">copyright&copy; all reserved. class 4 </div>

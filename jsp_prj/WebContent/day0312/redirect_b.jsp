@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    info="외부 JSP Page지시자"%>
+    info="redirect의 연습."
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,16 +26,16 @@
 			<div id="headerTitle"> SIST Class4</div>
 			</div>
 	<div id="container">
-		<div>
-		<%String name="노진경"; %>
-		<strong>외부 JSP</strong>
-		<!-- action태그는 변수나 method의 공유가 되지 않는다 : 각각의 class로 생성되고 JVM에서 
-		각각의 instance가 생성되므로 다른 instance내의 변수는 사용할 수 없다.  -->
-		<jsp:include page="include_action_b.jsp"/>
-		<strong>외부 JSP</strong>
-		<%= name %><br/>
-	<%-- 	삽입된 JSP 변수 : <%= msg %> --%>
-		</div>
+	비정상적인 요청이 있을 때 보여질 페이지<br/>
+	<a href="redirect_a.jsp?name=jungyun&age=20">요청</a>
+	<div>
+	<!-- forward와는 다르게 이동한 페이지에서 파라메터 값을 사용할 수 없다.
+			비정상적인 요청이 있을 때 제공될 페이지이므로 이전 페이지의 값들을
+			사용할 필요가 없다.
+	 -->
+		파라메터 이름 : <%= request.getParameter("name") %><br/>
+		파라메터 나이 : <%= request.getParameter("age") %><br/>
+	</div>
 	</div>
 	<div id="footer">
 		<div id="footerTitle">copyright&copy; all reserved. class 4 </div>

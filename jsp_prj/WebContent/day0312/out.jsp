@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    info="외부 JSP Page지시자"%>
+    info="브라우저로 출력하는 내장객체"
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,16 +26,40 @@
 			<div id="headerTitle"> SIST Class4</div>
 			</div>
 	<div id="container">
-		<div>
-		<%String name="노진경"; %>
-		<strong>외부 JSP</strong>
-		<!-- action태그는 변수나 method의 공유가 되지 않는다 : 각각의 class로 생성되고 JVM에서 
-		각각의 instance가 생성되므로 다른 instance내의 변수는 사용할 수 없다.  -->
-		<jsp:include page="include_action_b.jsp"/>
-		<strong>외부 JSP</strong>
-		<%= name %><br/>
-	<%-- 	삽입된 JSP 변수 : <%= msg %> --%>
-		</div>
+	<%
+		//out 내장객체의 사용. : 장점 : scriptlet을 끊지않고 브라우저로 출력 할 수 있다.
+		String subject="JSP(Java Server Page) : SSS(Server Side Script) 중 하나";
+		out.println( subject );
+		
+		String[] link={"http://daum.net","http://youtube.com","http://naver.com"};
+		String[] link_name={"공선의","이재찬","김건하"};
+	%>
+		<table border="1">
+		<tr>
+			<th width="100">out사용</th>
+		</tr>
+<%
+			for(int i=0; i < link.length; i++){ 
+			out.println("\t\t<tr>");
+			out.print("\t\t\t<td><a href='");
+			out.print(link[i]);
+			out.print("'>");
+			out.print(link_name[i]);
+			out.println("</a></td>");
+			out.println("\t\t</tr>");		
+			}//end for
+%>
+		</table>
+		<table border="1">
+		<tr>
+			<th width="150">Expression 사용</th>
+		</tr>
+		<% for( int i=0; i< link.length; i++){	%>
+		<tr>
+			<td><a href="<%= link[i] %>"><%=link_name[i] %></a></td>
+		</tr>
+		<% }//end for	%>
+		</table>
 	</div>
 	<div id="footer">
 		<div id="footerTitle">copyright&copy; all reserved. class 4 </div>
