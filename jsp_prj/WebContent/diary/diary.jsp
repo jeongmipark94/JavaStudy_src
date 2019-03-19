@@ -28,14 +28,14 @@
 #diaryToday{ width:100px; font-family: 고딕체; font-size: 27px; font-weight: bold;	}	
 .diaryTd{ width: 100px; height: 60px; border: 1px solid #CECECE ; 
 				text-align: left; vertical-align: top; font-size: 16px; font-weight: bold }					
+.todayTd{ width: 100px; height: 60px; border: 1px solid #D7E2E9 ;
+			background-color:#FACFCD; text-align: left; vertical-align: top; font-size: 16px; font-weight: bold }					
 .blankTd{ width: 100px; height: 70px; border: 1px solid #CECECE ; 
 				color:#CCCCCC;
 				text-align: left; vertical-align: top; font-size: 16px; font-weight: bold }
 .sunColor{ font-size: 15px; color: #DE4F44}						
 .weekColor{ font-size: 15px; color: #222222}						
 .satColor{ font-size: 15px; color: #5258CB }			
-.today{ background-color: #FACFCD; border:1px solid  #CECECE;
-		text-align: left; vertical-align: top; font-size: 16px; font-weight: bold }			
 /*  달력 설정  끝  */			
 /* 색 넣어준건 넓이가얼만큼 차지하는지 확인하는 용도로 쓴 것. 확인 후엔 필요없어서 지웠다.*/
 </style>
@@ -138,6 +138,11 @@
 	%>
 	<%
 		Calendar cal= Calendar.getInstance();
+		//오늘을 저장
+		StringBuilder todate =new StringBuilder();
+		todate.append(cal.get(Calendar.YEAR)).append(cal.get(Calendar.MONTH)+1)
+		.append(cal.get(Calendar.DAY_OF_MONTH));
+		
 		int nowYear=0;
 		int nowMonth=0;
 		int nowDay=cal.get(Calendar.DAY_OF_MONTH);
@@ -154,7 +159,17 @@
 			cal.set(Calendar.YEAR,Integer.parseInt(param_year)); //Calendar의 month를 param_month로 바꿀것이다
 		}//end if
 		
-		 nowYear=cal.get(Calendar.YEAR);
+		nowYear=cal.get(Calendar.YEAR);
+		
+		boolean toDayFlag=false;
+		StringBuilder nowDate=new StringBuilder();
+		nowDate.append(nowYear).append(nowMonth).append(nowDay);
+		
+		if(todate.toString().equals(nowDate.toString())){//equals는 todate와 nowDate의 주소가 같은지를 물어보는거라서(객체가 여러개가 생겨서 ) 
+			toDayFlag=true;
+		}//end if
+		log(todate+"/"+nowDate+"/"+toDayFlag);
+		
 		
 		pageContext.setAttribute("nowYear",nowYear);
 		pageContext.setAttribute("nowMonth",nowMonth);
@@ -188,50 +203,75 @@
 		</tr>
 		<tr>
 		<%
-			String dayClass="";
-			String todayClass="";
+			String dayClass="";//요일별 색
+			String todayCss="";//오늘이거나 평일의 의 TD색
 		//매월마다 끝나는 날짜가 다르기 때문에 무한루프를 사용한다.
 		for(int tempDay=1;  ; tempDay++){
 			cal.set(Calendar.DAY_OF_MONTH, tempDay);//임시일자를 설정한다.
-			 if( cal.get(Calendar.DAY_OF_MONTH) != tempDay && cal.get(Calendar.DAY_OF_WEEK)!=Calendar.SATURDAY ){
+			 if( cal.get(Calendar.DAY_OF_MONTH) != tempDay/*  && cal.get(Calendar.DAY_OF_WEEK)!=Calendar.SATURDAY */ ){
 				 
-			     //설정된 날짜가 현재 일자가 아니라면일자 다음 달 1일이므로 반복문을 빠져나간다.
-			    	 int i=1;
-			     for( int blankTd = cal.get(Calendar.DAY_OF_WEEK); blankTd<8; blankTd++){
+			     //설정된 날짜가 현재 일자가 아니라면일자 다음 달 1일이므로 공백을 출력한 후 
+			     //반복문을 빠져나간다.
+			     
+			    	// int i=1;
+			     int week=cal.get(Calendar.DAY_OF_WEEK);
+			  //  int nextMonth=cal.get(Calendar.MONTH)+1;
+			     if(week!= Calendar.SUNDAY){//마지막 일이 일요일이 아니면 출력
+			    	 int nextDay=1;
+			    	 for( int blankTd = cal.get(Calendar.DAY_OF_WEEK); blankTd<8; blankTd++){
 			    	 %>
-			    	 <td class="blankTd"><%=i%></td>
+			    	 <td class="blankTd"><div><%=cal.get(Calendar.MONTH)+1 //nowMonth+1==13?1:nowMonth+1 도 같으나 코드가 길어짐
+			    	 		%>/<%=nextDay %></div></td>
 			    	 <%
-			    	 i++;
-			     }//end for
+			    	 nextDay++;
+			    	 }//end for
+			   	  break;
+			    }//end if 
 				 break; //나갔을 떄의 날자는 다음 달의 1일이 됨
 			 }//end if
 			 
 			 //1일을 출력하기전  공백 출력.
 			 switch(tempDay){
 			 case START_DAY :	
+				 //전달의 마지막날
+				 cal.set(Calendar.MONTH, nowMonth-2);
+				 int prevMonth=cal.get(Calendar.MONTH)+1;//이전 월
+				 int prevLastDay=cal.getActualMaximum(Calendar.DATE);//이전월의 마지막 일
+				 
+				 cal.set(Calendar.MONTH, nowMonth-1);
+				 //다시 현재월로 변경하여 1일에 맞는 공백을 출력
+				 int week=cal.get(Calendar.DAY_OF_WEEK);
+				 //System.out.println( week);
 				 for(int blankTd=1; blankTd<cal.get(Calendar.DAY_OF_WEEK); blankTd++){
 					%>
-					<td class="blankTd"></td>
+					<td class="blankTd"><%=prevMonth %>/<%=prevLastDay-week+blankTd+1 %></td>
 					<%
 				 }//end for
-			 
 			 }//end switch
 			 //요일별 색 설정
 			 switch( cal.get(Calendar.DAY_OF_WEEK)){
 			 case Calendar.SUNDAY:	 dayClass="sunColor";		 break;
 			 case Calendar.SATURDAY: dayClass="satColor"; break;
 			 default:								dayClass="weekColor";
-			 
 			 }//end switch
-			 //오늘 일 경우에는 색 다르게 주기 
-			 if( cal.get(Calendar.DATE)==nowDay  /* && cal.get(Calendar.MONTH)==nowMonth */ ){
-				 todayClass="today";
-			 }else{
-				 todayClass="diaryTd";
-			 }//end else
 			 
+			//오늘 일 경우에는 색 다르게 주기 
+			 todayCss="diaryTd";//평일의 CSS설정
+			 if(toDayFlag){//요청한 년월일과 오늘의 년월일이 같다면  
+				 if(nowDay==tempDay){//오늘일자에만 다른 CSS를 적용한다.
+				 	todayCss="todayTd";
+				 }//end if
+			 }//end if
+			 
+			/* 내가푼거 망함.. 
+			 // if( cal.get(Calendar.DATE)==nowDay  /* && cal.get(Calendar.MONTH)==nowMonth */// ){
+			//	 todayClass="today";
+			 //}else{
+			//	 todayClass="diaryTd";
+			// }//end else
+			 // */
 			 %>
-			<td class= <%=todayClass %>>
+			<td class= <%=todayCss %>>
 <!-- 			<td class="diaryTd"> -->
 			
 			<div><span class=" <%=dayClass%>"><%=tempDay %></span></div>
