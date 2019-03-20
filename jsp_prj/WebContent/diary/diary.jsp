@@ -274,7 +274,8 @@
 			<td class= <%=todayCss %>>
 <!-- 			<td class="diaryTd"> -->
 			
-			<div><span class=" <%=dayClass%>"><%=tempDay %></span></div>
+			<div><a href="#void"><span class=" <%=dayClass%>"><!--가장 가까이 있는 태그가 적용을 받는다.  -->
+				<%=tempDay %></span></a></div>
 			</td>
 			 <%
 			//토요일이면 줄 변경

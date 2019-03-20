@@ -1,9 +1,10 @@
-<%@page import="java.net.URLEncoder"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Date"%>
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="java.io.File"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    info="MultipartRequest사용 파일 업로드 처리 "
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,42 +30,34 @@
 			</div>
 	<div id="container">
 	<%
-		File uploadFolder = new File("C:/dev/workspace/jsp_prj/WebContent/upload");
-		File[] listFile=uploadFolder.listFiles();
+	//1. 생성 - 파일 업로드 실행
+	int maxSize=1024*1024*10;
+	
+	File repository = new File("C:/dev/workspace/jsp_prj/WebContent/upload");
+	
+	MultipartRequest mr=new MultipartRequest(request,repository.getAbsolutePath(),
+					maxSize, "UTF-8", new DefaultFileRenamePolicy());//외부 jar파일을 lib에 넣었기 때문에 쓸 수 있다.
+	//2.파라메터의 처리
+	String name=mr.getParameter("uploader");
+	String age= mr.getParameter("age");
+	//3.업로드된 파일명 받기 
+	//DefaultFileRenamePolicy에 의해 변경된 이름이 될 수도 있음.
+	String fileName=mr.getFilesystemName("upfile");
+	//4. 원본 파일명 받기.
+	String originalfileName= mr.getOriginalFileName("upfile");
 	%>
-	<a href="upload_form.jsp">업로드</a><br/>
-	<table border="1">
-		<tr>
-			<th width="60">번호</th>
-			<th width="350">파일명</th>
-			<th width="150">업로드 일시</th>
-			<th width="120"> 크기(byte)</th>
-		</tr>
-		<%
-		if(listFile.length !=0){
-			File temp= null;
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd a HH:mm");
-			for(int i=0; i< listFile.length; i++){
-					temp=listFile[i];
-		%>
-		<tr>
-			<td><%=i+1 %></td>
-			<!-- 한글파일명을 link(<a tag>)로 전송할 때에는 encoding을 해 주어야 값이 올바르게 전송된다.
-			<form>으로 넘길 때에는 browser에 encoding을 해주므로 개발자가 encoding할 필요가 없다.
-			-->
-			<td><a href="download.jsp?file_name=<%=URLEncoder.encode(temp.getName(),"UTF-8")%>"><%=temp.getName() %></a></td>
-			<td><%=sdf.format(new Date(temp.lastModified())) %></td>
-			<td><%=temp.length() %>byte</td>
-		</tr>
-		<%
-			}//end for
-		}else{
-		out.println("<tr><td colspan='4' align='center'>업로드된 파일이 존재하지 않습니다.</td></tr>");
-		}//end else
-		%>
-		
-		
-	</table>
+	<div>
+		<strong>파일업로드 성공</strong>
+		<ul>
+			<li>업로더:<%= name %></li>
+			<li>연령대:<%= age %></li>
+			<li>업로드된 파일명 :<%= fileName%></li>
+			<li>원본 파일명:<%= originalfileName%></li>
+			<li><a href="mr_upload_form.jsp">업로드 폼</a></li>
+			<li><a href="../day0319/file_list.jsp">파일리스트</a></li>
+		</ul>	
+	</div>	
+	
 	</div>
 	<div id="footer">
 		<div id="footerTitle">copyright&copy; all reserved. class 4 </div>
