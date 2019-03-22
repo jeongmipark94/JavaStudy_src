@@ -4,6 +4,7 @@
 <%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,10 +22,14 @@
 #footerTitle{ float:right; font-size: 15px; padding-top:20px; padding-right: 20px }
 /* 색 넣어준건 넓이가얼만큼 차지하는지 확인하는 용도로 쓴 것. 확인 후엔 필요없어서 지웠다.*/
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 <body>
 <div id="wrap">
-	<div id="header">header :800(w) x 140(h)
+	<div id="header">
+	<div style="padding-top: 100px">
+			<c:import url="../common/jsp/main_menu.jsp"/>
+			</div>
 			<div id="headerTitle"> SIST Class4</div>
 			</div>
 	<div id="container">
