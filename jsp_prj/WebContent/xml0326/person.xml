@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<person>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE persons SYSTEM "person.dtd">
+<persons>
 	<person>
 		<name>
 			<firstName>정윤</firstName>
@@ -20,12 +21,13 @@
 	<!-- wellformed(적격) 문서는 작성규칙만 지켜서 만들면 된다. 
 		형제 노드와 다른  노드의 순서를 가지거나 더 추가해도 된다.
 	-->
+	<!-- valid 문서는 작성규칙과 DTD에 정의된 규칙을 모두 지켜서 만들어야한다. -->
 		<name>
-			<lastName>이</lastName>
-			<middleName>코잘잘</middleName>
 			<firstName>재찬</firstName>
+			<!-- <middleName>코잘잘</middleName> -->
+			<lastName>이</lastName>
 		</name>
 			<ssn>900101-*******</ssn>
 			<address>인천시 소래포구</address>
 	</person>
-</person>
+</persons>
