@@ -1,4 +1,4 @@
-<%@page import="jdk.nashorn.internal.runtime.regexp.joni.SearchAlgorithm"%>
+<%-- <%@page import="jdk.nashorn.internal.runtime.regexp.joni.SearchAlgorithm"%> --%>
 <%@page import="kr.co.sist.diary.vo.SearchDataVO"%>
 <%@page import="kr.co.sist.diary.service.ListService"%>
 <%@page import="kr.co.sist.diary.vo.DiaryListVO"%>
