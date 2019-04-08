@@ -140,12 +140,7 @@ where	dong like #{ dong }||'%'
 </select>
 
 
-<!-- subquery의 조회 -->
-<!-- union의 조회 -->
-<!-- join의 조회 -->
-<!-- join + subquery의 조회 -->
-<!-- 컬럼명 또는 테이블명이 동적일 때의 조회 -->
-<!-- dynamic query : where, if, choose, foreach-->
+
 
 </mapper>
 
