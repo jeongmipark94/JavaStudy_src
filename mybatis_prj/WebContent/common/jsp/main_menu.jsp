@@ -53,6 +53,14 @@
                 <li><a href="main.jsp?page=day0408/join">join</a></li>
               </ul>
             </li>
+            <li><a href="#void">4일차</a>
+              <ul>
+                <li><a href="main.jsp?page=day0409/join_subquery">join+subquery</a></li>
+                <li><a href="main.jsp?page=day0409/dynamic_table">테이블명이 동적일 때</a></li>
+                <li><a href="main.jsp?page=day0409/dynamic_if">dynamic if - 상황에 따른 다른 쿼리를 실행 where )</a></li>
+                <li><a href="main.jsp?page=day0409/homework">숙제 - 도전!!</a></li>
+              </ul>
+            </li>
           </ul>
         </li>
         </ul>
