@@ -29,14 +29,27 @@
 	<div id="header">header :800(w) x 140(h)
 			<div id="headerTitle"> SIST Class4</div>
 				<div style="padding-top: 100px">
-				
+					<c:import url="/common/jsp/main_menu.jsp"/>
 				</div>
 			</div>
 	<div id="container">
+	
+	<form action="vo_process.do">
+		<label>이름</label>
+		<input type="text" name="name" class="inputBox"/><br/>
+		<label>나이</label>
+		<input type="text" name="age" class="inputBox"/><br/>
+		<label>관심언어</label><br/>
+		<input type="checkbox" name="lang" value="Java"/>Java
+		<input type="checkbox" name="lang" value="C/C++"/>C/C++
+		<input type="checkbox" name="lang" value="Python"/>Python
+		<input type="checkbox" name="lang" value="VB"/>VB<br/>
+		<input type="submit" value="전송"/>
+	
+	</form>
+	
 	</div>
-	
 	<div id="footer">
-	
 	</div>
 </div>
 

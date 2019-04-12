@@ -2,16 +2,16 @@
     pageEncoding="UTF-8"%>
 <!-- smartmenu 시작 -->
 <!-- SmartMenus core CSS (required) -->
-    <link href="http://localhost:8080/mybatis_prj/common/smartmenu/css/sm-core-css.css" rel="stylesheet" type="text/css" />
+    <link href="http://localhost:8080/spring_mvc/common/smartmenu/css/sm-core-css.css" rel="stylesheet" type="text/css" />
 
     <!-- "sm-blue" menu theme (optional, you can use your own CSS, too) -->
-    <link href="http://localhost:8080/mybatis_prj/common/smartmenu/css/sm-simple/sm-simple.css" rel="stylesheet" type="text/css" />
+    <link href="http://localhost:8080/spring_mvc/common/smartmenu/css/sm-simple/sm-simple.css" rel="stylesheet" type="text/css" />
 
 	<!-- jQuery -->
    	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
 
     <!-- SmartMenus jQuery plugin -->
-    <script type="text/javascript" src="http://localhost:8080/mybatis_prj/common/smartmenu/jquery.smartmenus.min.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/spring_mvc/common/smartmenu/jquery.smartmenus.min.js"></script>
 
     <!-- SmartMenus jQuery init -->
     <script type="text/javascript">
@@ -21,61 +21,52 @@
     			subMenusSubOffsetY: -8
     		});
     	});
-    </script>
+    	
 
+    	function requestAll(){
+    		var method="";
+    		if(confirm("GET방식으로 요청 하시겠습니까?")){
+    			method="GET";
+    		}else{
+    			alert("POST방식으로 요청합니다.")
+    			method="POST";
+    		}//else
+    			
+    			document.hidFrm.method=method;
+    			document.hidFrm.action="request_all.do";
+    			document.hidFrm.submit();
+    			
+    	}//requestAll
+
+    	function sendPost(){
+    		//chrome은 JavaScpropt에서 action을 변경하면 form의 action이
+    		//계속 유지된다.
+    		document.hidFrm.action="request_post.do";
+    		document.hidFrm.submit();
+    	}//sendPost
+    	
+    	
+    </script>
+    <form action="request_post.do" name="hidFrm" id="hidFrm" method="post"></form>
 <!-- smartmenu 끝 -->
 	<nav id="main-nav">
       <!-- Sample menu definition -->
       <ul id="main-menu" class="sm sm-simple">
         <li><a href="#void">홈으로</a></li>
-        <li><a href="#void">쿼리실행</a>
+        <li><a href="#void">Spring MVC 사용</a>
           <ul>
             <li><a href="#void">1일차</a>
               <ul>
-                <li><a href="main.jsp?page=day0404/single_column">컬럼 하나에 레코드 하나</a></li>
-                <li><a href="main.jsp?page=day0404/multi_column">컬럼 여러개에 레코드 하나 </a></li>
-                <li><a href="main.jsp?page=day0404/multi_row">컬럼 하나에 레코드 여러개</a></li>
-              </ul>
-            </li>
-            <li><a href="#void">2일차</a>
-              <ul>
-                <li><a href="main.jsp?page=day0405/multi_column_row">컬럼여러개 레코드 여러개 조회</a></li>
-                <li><a href="main.jsp?page=day0405/multi_param">where의 값이 여러개</a></li>
-                <li><a href="main.jsp?page=day0405/lessthan">&lt; 의 비교</a></li>
-                <li><a href="main.jsp?page=day0405/greaterthan">&gt; 의 비교</a></li>
-                <li><a href="main.jsp?page=day0405/like">like</a></li>
-              </ul>
-            </li>
-            <li><a href="#void">3일차</a>
-              <ul>
-                <li><a href="main.jsp?page=day0408/subquery">subquery</a></li>
-                <li><a href="main.jsp?page=day0408/union">union</a></li>
-                <li><a href="main.jsp?page=day0408/join">join</a></li>
-              </ul>
-            </li>
-            <li><a href="#void">4일차</a>
-              <ul>
-                <li><a href="main.jsp?page=day0409/join_subquery">join+subquery</a></li>
-                <li><a href="main.jsp?page=day0409/dynamic_table">테이블명이 동적일 때</a></li>
-                <li><a href="main.jsp?page=day0409/dynamic_if">dynamic if - 상황에 따른 다른 쿼리를 실행 where )</a></li>
-                <li><a href="main.jsp?page=day0409/homework">숙제 - 도전!!</a></li>
-              </ul>
-            </li>
-            <li><a href="#void">5일차</a>
-              <ul>
-                <li><a href="main.jsp?page=day0410/dynamic_choose">dynamic choose</a></li>
-                <li><a href="main.jsp?page=day0410/dynamic_foreach">dynamic foreach</a></li>
-                <li><a href="main.jsp?page=day0410/insert_procedure">insert procedure</a></li>
-              </ul>
-            </li>
-            <li><a href="#void">6일차</a>
-              <ul>
-                <li><a href="main.jsp?page=day0411/select_procedure">select procedure</a></li>
+                <li><a href="request_get.do">GET방식요청</a></li>
+                <li><a href="#void" onclick="sendPost()">POST방식 요청</a></li>
+                <li><a href="#void" onclick="requestAll()">GET/POST 모두 요청 (doGet)</a></li>
+                <li><a href="request_form.do">HttpServletRequest로 파라메터 처리</a></li>
+                <li><a href="vo_form.do">VO로 파라메터 처리</a></li>
               </ul>
             </li>
           </ul>
         </li>
-        <li><a href="main.jsp?page=day0410/car">동기방식 차량조회</a></li>
+        <li><a href="#">동기방식 차량조회</a></li>
         </ul>
         </nav>
 		
