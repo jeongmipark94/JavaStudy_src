@@ -66,7 +66,7 @@ $(function(){
 			success:function( json ){
 				if(json.result){
 					//<div>의 자식 노드로 작성한 값을 추가(append)
-					//자식노드 전에 추가(prepend())
+			 		//자식노드 전에 추가(prepend())
 					var date=new Date();
 					var output="<div style='border:1px solid #dfdfdf; width:600px; margin-bottom: 3px'>"+
 										reply+"<br/>"+writer+"("+date.getFullYear()+"-"+(date.getMonth()+1)+
