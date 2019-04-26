@@ -35,12 +35,24 @@
 				</div>
 			</div>
 	<div id="container">
-	<a href="add_form.do">정보추가</a>
-	<a href="search_member.do">정보조회</a>
+			<a href="add_form.do">정보추가</a>
+			<a href="search_member.do">정보조회</a>
 	
-	<div id="footer">
-	
+	<div>
+		<c:choose>
+		<c:when test="${ empty memberData }">
+				조회된 회원이 존재하지 않습니다.
+		</c:when>
+		<c:otherwise>
+			<ul>
+				<li>이름 : <c:out value="${ memberData.name }"/></li>
+				<li>출신고 : <c:out value="${ memberData.highschool}"/></li>
+				<li>위치 : <c:out value="${ memberData.loc}"/></li>
+			</ul>
+		</c:otherwise>
+		</c:choose>
 	</div>
+	
 </div>
 
 </body>

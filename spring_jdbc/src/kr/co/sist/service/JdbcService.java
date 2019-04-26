@@ -1,6 +1,7 @@
 package kr.co.sist.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +13,8 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kr.co.sist.dao.JdbcDAO;
+import kr.co.sist.domain.Member;
+import kr.co.sist.domain.MemberDetail;
 import kr.co.sist.vo.MemberVO;
 
 @Component
@@ -34,7 +37,31 @@ public class JdbcService {
     	  flag=true;
       }catch(DataAccessException das) {
          das.printStackTrace();
-      }
+      }//end catch
       return flag;
-   }
-}
+   }//fileUploadProcess
+   	
+   		public List<Member> searchAllMember(){
+   			List<Member> list=null;
+   			
+   			try {
+   				list=jdao.selectAllMember();
+   			}catch(DataAccessException dae){
+   				dae.printStackTrace();
+   			}//end catch
+   			return list;
+   		}//searchAllMember
+   
+   		//번호에 따른 회원을 조회
+   		public MemberDetail searchOneMember(int num) {
+   			MemberDetail md =null;
+   			
+   			try {
+   			md=jdao.selectOneMember(num);
+   			}catch(DataAccessException dae) {
+   				dae.printStackTrace();
+   			}//end catch
+   			return md;
+   		}//searchOneMember
+   
+}//class

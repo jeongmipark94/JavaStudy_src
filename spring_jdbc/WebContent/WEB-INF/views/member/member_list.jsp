@@ -35,12 +35,32 @@
 				</div>
 			</div>
 	<div id="container">
-	<a href="add_form.do">정보추가</a>
-	<a href="search_member.do">정보조회</a>
+			<a href="add_form.do">정보추가</a>
+			<a href="search_member.do">정보조회</a>
 	
-	<div id="footer">
-	
+	<div>
+		<c:forEach var="ml" items="${ requestScope.memberList }">
+		<table>
+			<tr>
+				<td rowspan="4"><img src="http://localhost:8080/spring_jdbc/upload/${ml.img }" width="100" height="100"/></td>
+			</tr>
+			<tr>
+				<td width="80">이름</td>
+				<td>
+					<a href="detail_member.do?num=${ ml.num }">
+					<c:out value="${ ml.name }"/></a>
+				</td>
+			</tr>
+			
+		</table>
+		</c:forEach>
+		
+		<c:if test="${ empty memberList }">
+				조회된 회원이 존재하지 않습니다.
+		</c:if>
+		
 	</div>
+	
 </div>
 
 </body>
