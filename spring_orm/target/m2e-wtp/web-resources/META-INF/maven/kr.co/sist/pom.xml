@@ -46,6 +46,15 @@
 		    <version>2.0.8</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-tx</artifactId>
+		    <version>4.3.9.RELEASE</version>
+		</dependency>
+		
+		
+		
 				<!-- https://mvnrepository.com/artifact/servlets.com/cos -->
 		<dependency>
 		    <groupId>servlets.com</groupId>

@@ -6,7 +6,20 @@
   			ns(name space) : XML 내에서 중복된 id를 사용할 수 있도록 구분하는 것. (패키지와 비슷한 용도)  	
   -->
 <mapper namespace="kr.co.sist">
-  
-  
-  
+  	<select id="selectAllLunch" resultType="kr.co.sist.domain.Lunch">
+  		select lunch_code, lunch_name, 's_'||img img, price, 
+  				to_char(input_date,'yyyy-mm-dd hh24:mi') input_date		
+  		from lunch
+  		order by input_date desc
+  	</select>
+  	
+  	<select id="selectDetail" resultType="kr.co.sist.domain.LunchDetail" 
+  					parameterType="String">
+  		select img, spec 
+  		from lunch
+  		where lunch_code=#{ lunch_code }
+  	</select>
+  	
+  	
+  	
 </mapper>
