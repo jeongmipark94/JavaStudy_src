@@ -15,10 +15,21 @@ public class AopRun {
 		
 		ItemService is=ac.getBean(ItemService.class);
 		//메서드가 실행되기 전에 먼저 불려짐 before 일 땐 // after일 땐 나중에 찍혀야된다.
+/*		System.out.println("----------------run getAddr---------");
+		is.getAddr();
+		System.out.println("----------------run getName---------");
+		is.getName();///
+		System.out.println("----------------run getAge---------");
+		is.getAge();///
+*/		
 		
-		ItemDomain id = is.searchItem("김희철");
+		/*ItemDomain id = is.searchItem("이재찬");
 		System.out.println(id.getItemNo());
-		System.out.println(id.getItem() );
+		System.out.println(id.getItem() );*/
+		
+		ItemDomain id=is.searchData("정택성");
+		System.out.println(id.getItemNo()+" / "+ id.getItem());
+		
 	}//execute
 	
 	public static void main(String[] args) {
